@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Pedoman Administrasi Keuangan SE2026</title>
+    <style>
+        :root {
+            --primary-color: #1a73e8;
+            --primary-light: rgba(26, 115, 232, 0.1);
+            --accent-color: #f5a623;
+            --accent-light: rgba(245, 166, 35, 0.1);
+            --dark-bg: #111827;
+            --card-bg: rgba(255, 255, 255, 0.95);
+            --text-dark: #1f2937;
+            --text-gray: #4b5563;
+            --border-color: #e5e7eb;
+            --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            background-color: #f9fafb;
+            color: var(--text-dark);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Section */
+        .hero {
+            position: relative;
+            background: linear-gradient(rgba(17, 24, 39, 0.85), rgba(17, 24, 39, 0.9)), 
+                        url('fot.jpeg') no-repeat center center/cover;
+            padding: 140px 20px 160px 20px;
+            text-align: center;
+            color: white;
+            border-bottom: 4px solid var(--accent-color);
+        }
+
+        .nav-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 5%;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 15px;
+        }
+
+        .logo-text {
+            font-size: 20px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logo-text span {
+            color: var(--accent-color);
+        }
+
+        .logo-right-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-right-container img {
+            height: 35px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.1));
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto; 
+        }
+
+        .hero-tag {
+            background-color: var(--accent-light);
+            color: var(--accent-color);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            display: inline-block;
+            margin-bottom: 15px;
+            border: 1px solid rgba(245, 166, 35, 0.3);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .search-container {
+            max-width: 550px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 14px 20px 14px 50px;
+            font-size: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            color: white;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .search-input:focus {
+            border-color: var(--accent-color);
+            background: rgba(255, 255, 255, 0.25);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            pointer-events: none;
+        }
+
+        /* Main Grid Section */
+        .main-container {
+            width: 100%;
+            max-width: 1440px;
+            margin: -80px auto 60px auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 20px;
+        }
+
+        /* Card Layout */
+        .card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 24px 20px;
+            text-align: center;
+            text-decoration: none;
+            color: var(--text-dark);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            gap: 16px;
+        }
+
+        .card.hidden {
+            display: none !important;
+        }
+
+        .card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 35px rgba(26, 115, 232, 0.12);
+            background-color: #ffffff;
+            border-color: var(--primary-color);
+        }
+
+        .card.highlight-card {
+            border: 1px dashed var(--accent-color);
+        }
+        
+        .card.highlight-card:hover {
+            border-style: solid;
+            box-shadow: 0 20px 35px rgba(245, 166, 35, 0.15);
+        }
+
+        .card-icon {
+            font-size: 30px;
+            background: var(--primary-light);
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: var(--primary-color);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .card:hover .card-icon {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .card.highlight-card .card-icon {
+            background: var(--accent-light);
+            color: var(--accent-color);
+        }
+
+        .card.highlight-card:hover .card-icon {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .card-details {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .card-title {
+            font-size: 13.5px;
+            color: var(--text-dark);
+            line-height: 1.5;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.3px;
+        }
+
+        /* Footer */
+        .footer-note {
+            margin-top: auto;
+            text-align: center;
+            padding: 25px 20px;
+            font-size: 12px;
+            color: var(--text-gray);
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            text-transform: uppercase;
+            background-color: #f3f4f6;
+            border-top: 1px solid var(--border-color);
+            line-height: 1.5;
+        }
+
+        .footer-note span {
+            color: var(--dark-bg);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 1280px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 16px;
+            }
+        }
+
+        @media (max-width: 960px) {
+            .dashboard-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+
+        @media (max-width: 680px) {
+            .hero {
+                padding: 140px 15px 100px 15px;
+            }
+            .nav-bar {
+                flex-direction: column;
+                padding: 15px;
+                background: rgba(17, 24, 39, 0.95);
+            }
+            .logo-text {
+                font-size: 18px;
+            }
+            .hero h1 {
+                font-size: 26px;
+            }
+            .main-container {
+                margin-top: -45px;
+                padding: 0 16px;
+            }
+            .dashboard-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+            .card {
+                padding: 20px 12px;
+                border-radius: 12px;
+            }
+            .card-title {
+                font-size: 12px;
+            }
+        }
+
+        @media (max-width: 400px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <nav class="nav-bar">
+            <div class="logo-text">SENSUS <span>EKONOMI</span></div>
+            <div class="logo-right-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Logo_BPS.svg" alt="Logo BPS">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_of_Ministry_of_Finance_of_the_Republic_of_Indonesia.svg" alt="Logo Kemenkeu">
+            </div>
+        </nav>
+
+        <div class="hero-content">
+            <span class="hero-tag">Sensus Ekonomi 2026</span>
+            <h1>Pedoman Administrasi Keuangan</h1>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" class="search-input" placeholder="Telusuri dokumen atau kode MAK...">
+                <span class="search-icon">🔍</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="main-container">
+        <div class="dashboard-grid" id="dashboardGrid">
+
+            <a href="home.html" target="_blank" class="card">
+                <div class="card-icon">🏠</div>
+                <div class="card-details">
+                    <h3 class="card-title">Home</h3>
+                </div>
+            </a>
+
+            <a href="jadwal_kegiatan01.html" target="_blank" class="card">
+                <div class="card-icon">📅</div>
+                <div class="card-details">
+                    <h3 class="card-title">Jadwal Kegiatan SE 2026</h3>
+                </div>
+            </a>
+
+            <a href="Belanja.html" target="_blank" class="card">
+                <div class="card-icon">📝</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Bahan (521211)</h3>
+                </div>
+            </a>
+
+            <a href="belanja02.html" target="_blank" class="card">
+                <div class="card-icon">📁</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Barang Persediaan Barang Konsumsi (521811)</h3>
+                </div>
+            </a>
+
+            <a href="belanja 03.html" target="_blank" class="card">
+                <div class="card-icon">🔑</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Non Operasional Lainnya (522141)</h3>
+                </div>
+            </a>
+
+            <a href="belanja04.html" target="_blank" class="card">
+                <div class="card-icon">🎓</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Jasa Profesi (522151)</h3>
+                </div>
+            </a>
+
+            <a href="belanja jasa lainnya.html  " target="_blank" class="card">
+                <div class="card-icon">⚙️</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Jasa Lainnya (522191)</h3>
+                </div>
+            </a>
+
+            <a href="belanja06.html" target="_blank" class="card">
+                <div class="card-icon">💵</div>
+                <div class="card-details">
+                    <h3 class="card-title">Honor Output Kegiatan (521213)</h3>
+                </div>
+            </a>
+
+            <a href="belanja perjalanan biasa.html" target="_blank" class="card">
+                <div class="card-icon">✈️</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Perjalanan Biasa (524111)</h3>
+                </div>
+            </a>
+
+            <a href="belanja05.html" target="_blank" class="card">
+                <div class="card-icon">🚗</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Perjalanan Dinas Dalam Kota (524113)</h3>
+                </div>
+            </a>
+
+            <a href="belanja06.html" target="_blank" class="card">
+                <div class="card-icon">🤝</div>
+                <div class="card-details">
+                    <h3 class="card-title">Belanja Perjalanan Dinas Paket Meeting Dalam Kota (524114)</h3>
+                </div>
+            </a>
+
+            <a href="kelengkapan.html" target="_blank" class="card">
+                <div class="card-icon">🏃</div>
+                <div class="card-details">
+                    <h3 class="card-title">Contoh Dokumen Kelengkapan</h3>
+                </div>
+            </a>
+
+            <a href="lapangan.html" target="_blank" class="card highlight-card">
+                <div class="card-icon">📎</div>
+                <div class="card-details">
+                    <h3 class="card-title">Petugas Lapangan SE2026</h3>
+                </div>
+            </a>
+
+        </div>
+    </main>
+
+    <footer class="footer-note">
+        TIM PENYUSUN PAK | <span>BIRO KEUANGAN DAN BMN</span> | 2026
+    </footer>
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const filterValue = this.value.toLowerCase();
+            const cards = document.querySelectorAll('#dashboardGrid .card');
+
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title') ? card.querySelector('.card-title').textContent.toLowerCase() : '';
+                if (title.includes(filterValue)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
