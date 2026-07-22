@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensus Ekonomi 2026</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* BACKGROUND DENGAN TEMA MATRIKS DATA & STATISTIK */
+        body {
+            background-color: #f8fafc;
+            /* Pola Titik Data (Scatter Plot Matrix) */
+            background-image: radial-gradient(#00569e 1px, transparent 1px), radial-gradient(#ff6b00 1px, #f8fafc 1px);
+            background-size: 24px 24px;
+            background-position: 0 0, 12px 12px;
+            min-height: 100vh;
+            padding: 4rem 1.5rem;
+            color: #334155;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* VISUALISASI GRAFIK TREN (LINE CHART) DI KIRI LAYAR */
+        .stat-line-decoration {
+            position: fixed;
+            top: 20%;
+            left: -50px;
+            width: 300px;
+            height: 200px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+            border-bottom: 5px solid #00569e;
+            border-left: 5px solid #00569e;
+            transform: rotate(5deg);
+        }
+        .stat-line-decoration::before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            bottom: 0;
+            left: 0;
+            /* Membuat efek garis tren naik turun */
+            clip-path: polygon(0% 80%, 20% 60%, 40% 75%, 60% 40%, 80% 55%, 100% 10%);
+            background: linear-gradient(to top, rgba(0,86,158,0.2), #00569e);
+        }
+
+        /* VISUALISASI GRAFIK BATANG (BAR CHART) DI KANAN LAYAR */
+        .stat-bar-decoration {
+            position: fixed;
+            bottom: 10%;
+            right: 40px;
+            display: flex;
+            align-items: flex-end;
+            gap: 12px;
+            opacity: 0.12;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .bar { width: 25px; border-radius: 6px 6px 0 0; }
+        .bar1 { height: 80px; background-color: #4db848; }
+        .bar2 { height: 140px; background-color: #ff6b00; }
+        .bar3 { height: 110px; background-color: #00569e; }
+        .bar4 { height: 180px; background-color: #4db848; }
+
+        /* KARTU UTAMA YANG TEGAS & ELEGAN */
+        .main-card {
+            max-width: 950px;
+            margin: 0 auto;
+            background: #ffffff;
+            padding: 3.5rem;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 86, 158, 0.15);
+            position: relative;
+            z-index: 1;
+            border: 1px solid #e2e8f0;
+        }
+
+        /* HEADER DENGAN AKSEN STRIP TIGA WARNA BPS */
+        header {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .color-bar {
+            display: flex;
+            justify-content: center;
+            gap: 4px;
+            margin-top: 1rem;
+        }
+        .color-dot {
+            width: 25px;
+            height: 6px;
+            border-radius: 3px;
+        }
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            color: #00569e;
+            letter-spacing: -0.5px;
+        }
+        h1 span {
+            color: #ff6b00;
+        }
+        .subtitle {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        /* KATEGORI JADWAL */
+        .section-container {
+            margin-bottom: 3rem;
+        }
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.6rem;
+            border-bottom: 2px solid #f1f5f9;
+        }
+        .section-badge {
+            color: white;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-right: 0.75rem;
+        }
+
+        .bg-biru { background-color: #00569e; }
+        .bg-oranye { background-color: #ff6b00; }
+        .bg-hijau { background-color: #4db848; }
+
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #1e293b;
+        }
+
+        /* TABEL DATA */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #ffffff;
+            min-width: 650px;
+        }
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.8px;
+            padding: 1.1rem 1.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            text-align: left;
+        }
+        td {
+            padding: 1.2rem 1.5rem;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+            color: #334155;
+            vertical-align: middle;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover td {
+            background-color: #f8fafc;
+        }
+        .col-no {
+            width: 8%;
+            font-weight: 700;
+            color: #64748b;
+            text-align: center;
+        }
+        .col-kegiatan {
+            width: 57%;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+        .col-waktu {
+            width: 35%;
+        }
+        .time-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+        
+        .tb-biru { background-color: #e6f0fa; color: #00569e; border: 1px solid #b3d4f0; }
+        .tb-oranye { background-color: #fff0e6; color: #d45900; border: 1px solid #ffd1b3; }
+        .tb-hijau { background-color: #f0f9f0; color: #368232; border: 1px solid #c2ecc0; }
+
+        @media (max-width: 992px) {
+            .stat-line-decoration, .stat-bar-decoration { display: none; } /* Sembunyikan dekorasi grafik di layar kecil */
+        }
+        @media (max-width: 768px) {
+            body { padding: 2rem 0.5rem; }
+            .main-card { padding: 1.5rem; border-radius: 16px; }
+            h1 { font-size: 1.8rem; }
+            td { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="stat-line-decoration"></div>
+<div class="stat-bar-decoration">
+    <div class="bar bar1"></div>
+    <div class="bar bar2"></div>
+    <div class="bar bar3"></div>
+    <div class="bar bar4"></div>
+</div>
+
+<div class="main-card">
+    <header>
+        <h1>Sensus Ekonomi <span>2026</span></h1>
+        <p class="subtitle">Jadwal & Tahapan Pelaksanaan</p>
+        <div class="color-bar">
+            <div class="color-dot bg-biru"></div>
+            <div class="color-dot bg-oranye"></div>
+            <div class="color-dot bg-hijau"></div>
+        </div>
+    </header>
+
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-badge bg-biru">A</div>
+            <div class="section-title">Tahap Persiapan</div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">NO</th>
+                        <th class="col-kegiatan">Nama Kegiatan</th>
+                        <th class="col-waktu">Jadwal Pelaksanaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-no">01</td>
+                        <td class="col-kegiatan">Pemeriksaan Prelist SBR</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M1 Jan – M4 Mar 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">02</td>
+                        <td class="col-kegiatan">Penetapan Prelist SBR</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">7 April 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">03</td>
+                        <td class="col-kegiatan">Kuesioner Final diterima Sekretariat SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">7 April 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">04</td>
+                        <td class="col-kegiatan">Pengadaan Instrumen dan perlengkapan petugas</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M3 Feb – M4 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">05</td>
+                        <td class="col-kegiatan">Pelaksanaan KKD dan Ngibar</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M1 Apr – M4 Agu 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">06</td>
+                        <td class="col-kegiatan">Rekrutmen Petugas Lapangan</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M3 Apr – M2 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">07</td>
+                        <td class="col-kegiatan">Internal roll-over: kuesioner CAPI</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M2 – M3 April 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-badge bg-oranye">B</div>
+            <div class="section-title">Tahap Pelatihan</div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">NO</th>
+                        <th class="col-kegiatan">Nama Kegiatan</th>
+                        <th class="col-waktu">Jadwal Pelaksanaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-no">08</td>
+                        <td class="col-kegiatan">Workshop Intama SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M2 Desember 2025</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">09</td>
+                        <td class="col-kegiatan">Refreshing Intama SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M4 Januari 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">10</td>
+                        <td class="col-kegiatan">Pelatihan Innas SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M4 Jan – M2 Feb 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">11</td>
+                        <td class="col-kegiatan">Refreshing Innas SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M4 April 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">12</td>
+                        <td class="col-kegiatan">Pelatihan Inda SE2026 dan Petugas Task Force</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M1 Mei – M2 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">13</td>
+                        <td class="col-kegiatan">Pelatihan Petugas Lapangan SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M3 Mei – M2 Juni 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-badge bg-hijau">C</div>
+            <div class="section-title">Tahap Pendataan</div>
+        </div>
+        <div class="table-responsive">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">NO</th>
+                        <th class="col-kegiatan">Nama Kegiatan</th>
+                        <th class="col-waktu">Jadwal Pelaksanaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-no">14</td>
+                        <td class="col-kegiatan">Pengiriman WA/e-mail massal (blasting) informasi sosialisasi SE2026 ke perusahaan</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M4 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">15</td>
+                        <td class="col-kegiatan">Melakukan blasting ulang sosialisasi ke perusahaan</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M4 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">16</td>
+                        <td class="col-kegiatan">WA/e-mail blasting tautan pendataan mandiri berbasis web (CAWI) ke perusahaan skala besar</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">1 Juni 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">17</td>
+                        <td class="col-kegiatan">Pengiriman ulang blasting CAWI ke perusahaan skala besar</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">8 Juni 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">18</td>
+                        <td class="col-kegiatan">Pelaksanaan Pendataan Lapangan</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">15 Jun – 31 Agu 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">19</td>
+                        <td class="col-kegiatan">Pemeriksaan akhir</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">1 – 15 September 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">20</td>
+                        <td class="col-kegiatan">Pengolahan hasil pendataan lengkap SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M1 Agu – M4 Nov 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">21</td>
+                        <td class="col-kegiatan">Penyusunan laporan kegiatan pendataan lengkap SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M1 – M4 Des 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

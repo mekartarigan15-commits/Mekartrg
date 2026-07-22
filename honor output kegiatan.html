@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HONOR OUTPUT KEGIATAN - SENSUS EKONOMI 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* BACKGROUND TEMA MATRIKS DATA & GRAFIK STATISTIK */
+        body {
+            background-color: #f6f9fc;
+            background-image: radial-gradient(#00569e 1px, transparent 1px), radial-gradient(#ff6b00 1px, #f6f9fc 1px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            color: #334155;
+            position: relative;
+        }
+
+        /* DEKORASI KURVA GRAFIK TREN DI LATAR BELAKANG */
+        body::before {
+            content: "";
+            position: fixed;
+            bottom: 5%;
+            left: -30px;
+            width: 400px;
+            height: 250px;
+            opacity: 0.06;
+            pointer-events: none;
+            border-bottom: 5px solid #00569e;
+            border-left: 5px solid #00569e;
+            transform: rotate(3deg);
+            clip-path: polygon(0% 85%, 15% 60%, 35% 75%, 55% 40%, 75% 55%, 100% 15%, 100% 100%, 0% 100%);
+            background: linear-gradient(to top, rgba(0, 86, 158, 0.3), transparent);
+        }
+
+        .main-container {
+            max-width: 1050px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 3.5rem 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.05);
+            border-top: 10px solid #00569e;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADER ELEGAN */
+        .header-top {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .header-top h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #00569e;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.25rem;
+        }
+        .header-top h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ff6b00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .header-badge {
+            display: inline-block;
+            background-color: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* DEFINISI & CATATAN (INFO GRID) */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        .pengertian {
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 14px;
+            border-left: 4px solid #00569e;
+        }
+        .pengertian h3 {
+            font-size: 1rem;
+            color: #0f172a;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .pengertian p {
+            font-size: 0.9rem;
+            color: #475569;
+            line-height: 1.6;
+            text-align: justify;
+            margin-bottom: 0.75rem;
+        }
+        .pengertian p:last-child {
+            margin-bottom: 0;
+        }
+        .catatan {
+            background: #fff9f2;
+            padding: 1.5rem;
+            border-radius: 14px;
+            border-left: 4px solid #ff6b00;
+            max-height: 420px;
+            overflow-y: auto;
+        }
+        .catatan h3 {
+            font-size: 1rem;
+            color: #b45309;
+            margin-bottom: 0.75rem;
+            font-weight: 700;
+        }
+        .catatan p {
+            font-size: 0.88rem;
+            margin-bottom: 0.75rem;
+            color: #78350f;
+            line-height: 1.5;
+            text-align: justify;
+        }
+        .catatan p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Kustom Scrollbar untuk Box Catatan */
+        .catatan::-webkit-scrollbar {
+            width: 6px;
+        }
+        .catatan::-webkit-scrollbar-track {
+            background: #fff4e6;
+            border-radius: 10px;
+        }
+        .catatan::-webkit-scrollbar-thumb {
+            background: #ffd1b3;
+            border-radius: 10px;
+        }
+
+        /* SECTION ACCORDION */
+        .dropdown-section {
+            margin-bottom: 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            background: #ffffff;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01);
+        }
+        .dropdown-section:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.04);
+        }
+        
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            cursor: pointer;
+            background: #ffffff;
+            user-select: none;
+            gap: 1.5rem;
+        }
+        .dropdown-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        
+        /* Arrow Bulat Minimalis */
+        .dropdown-arrow {
+            width: 36px;
+            height: 36px;
+            background-color: #f8fafc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-arrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid #64748b;
+            border-bottom: 2px solid #64748b;
+            transform: rotate(45deg);
+            margin-top: -3px;
+            transition: transform 0.3s ease;
+        }
+        
+        /* State Aktif */
+        .dropdown-section.active {
+            border-left: 5px solid #ff6b00;
+            border-color: #cbd5e1;
+        }
+        .dropdown-section.active .dropdown-title {
+            color: #00569e;
+        }
+        .dropdown-section.active .dropdown-arrow {
+            background-color: #fff0e6;
+            border-color: #ffd1b3;
+        }
+        .dropdown-section.active .dropdown-arrow::before {
+            border-color: #ff6b00;
+            transform: rotate(-135deg);
+            margin-top: 3px;
+        }
+
+        /* KONTEN DAN GRUP KARTU DATA */
+        .dropdown-isi {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #f8fafc;
+        }
+        .dropdown-isi-inner {
+            padding: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .dropdown-isi h4 {
+            font-size: 1.1rem;
+            color: #0f172a;
+            margin-bottom: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dropdown-isi h4::before {
+            content: "";
+            width: 4px;
+            height: 16px;
+            background-color: #4db848;
+            border-radius: 2px;
+        }
+
+        /* STRUKTUR DATA LIST ITEM */
+        .document-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .document-item {
+            background: #ffffff;
+            padding: 1rem 1.25rem;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            color: #334155;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .item-number {
+            background-color: #e6f0fa;
+            color: #00569e;
+            font-weight: 700;
+            min-width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        /* FOOTER KONTRASTING */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .tim { color: #ff6b00; }
+        .biro { color: #00569e; }
+        .tahun { color: #4db848; }
+
+        /* RESPONSIVE LAYOUT */
+        @media (max-width: 992px) {
+            .info-grid { grid-template-columns: 1fr; gap: 1rem; }
+            .catatan { max-height: none; }
+            body::before { display: none; }
+        }
+        @media (max-width: 768px) {
+            body { padding: 1.5rem 0.5rem; }
+            .main-container { padding: 2rem 1.25rem; border-radius: 16px; }
+            .header-top h1 { font-size: 1.6rem; }
+            .dropdown-header { padding: 1.25rem 1rem; }
+            .dropdown-title { font-size: 0.95rem; }
+            .dropdown-isi-inner { padding: 1.25rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="header-top">
+        <h1>HONOR OUTPUT KEGIATAN</h1>
+        <h2>Sensus Ekonomi 2026</h2>
+        <div class="header-badge">Mekanisme & Syarat Pertanggungjawaban Honorarium</div>
+    </div>
+
+    <!-- BLOK INFORMASI PENGANTAR -->
+    <div class="info-grid">
+        <div class="pengertian">
+            <h3>Pengertian</h3>
+            <p>Digunakan untuk mencatat beban honor tidak tetap bagi pegawai pelaksana kegiatan yang terikat output (seperti Peneliti, Penyuluh non-PNS, dan Tim Pelaksana Kegiatan insidentil).</p>
+            <p><strong>Honorarium Tim Pelaksana</strong> diberikan kepada personel berdasarkan Surat Keputusan pejabat berwenang (Presiden/Menteri/Eselon I/KPA) untuk menyelesaikan tugas spesifik tertentu.</p>
+            <p>Cakupan pengeluaran ini juga meliputi komponen honor petugas lapangan, serta pengajar diklat/pelatihan (Innas, Inda, maupun instruktur petugas).</p>
+        </div>
+        <div class="catatan">
+            <h3>Catatan Penting:</h3>
+            <p><strong>Batasan Anggota Tim:</strong> Maksimal 25 orang untuk tim lintas Eselon I internal K/L. Dapat melebihi 25 orang jika bersifat lintas K/L dengan asas kepatutan dan efisiensi.</p>
+            <p><strong>Keterlibatan Instansi Lain:</strong> Honor tim lintas instansi dibayarkan hanya pada bulan yang terbukti memiliki rekam aktivitas koordinasi/keterlibatan nyata.</p>
+            <p><strong>Batasan Akumulasi Bulanan:</strong> Sesuai regulasi SBM (BPS posisi Klasifikasi II), alokasi penerimaan honorarium dibatasi maksimal 2 tim dalam 1 bulan per individu.</p>
+            <p><strong>Standar Biaya:</strong> Honor pengajar merujuk pada SBKS. Honor mitra non-PNS/PNS non-BPS menggunakan satuan O-B dengan pengawasan ambang batas PTKP (bebas pajak jika di bawah limit).</p>
+            <p><strong>Syarat BAST & Urgensi:</strong> Pencairan dilakukan setelah tugas selesai berbasis BAST. Kondisi darurat non-tunai wajib mengacu Perka BPS pembayaran non-tunai.</p>
+            <p><strong>Satuan Biaya Umum vs Khusus:</strong> Satuan Umum untuk tugas statistik umum, Satuan Khusus untuk operasional spesifik (pendataan/pemeriksaan/pengolahan) berbasis SBML Menteri.</p>
+        </div>
+    </div>
+
+    <!-- DROPDOWN 1 -->
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">Honor tim pelaksana kegiatan di Kabupaten/Kota/Provinsi</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <h4>Kelengkapan pembayaran honor tim:</h4>
+                <ul class="document-list">
+                    <li class="document-item">
+                        <span class="item-number">1</span>
+                        <div>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">2</span>
+                        <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">3</span>
+                        <div>SK KPA/SK KBPS yang mencakup tugas dan fungsi, besaran rate, dan kedudukan dalam Pokja sesuai dengan ketetapan SBM.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">4</span>
+                        <div>Laporan tim / bukti fisik output pekerjaan.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">5</span>
+                        <div>Daftar rekap kuitansi / kuitansi sah (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">6</span>
+                        <div>SSP PPh Pasal 21 (disesuaikan dengan regulasi perpajakan yang berlaku).</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DROPDOWN 2 -->
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">Honor pengajar Innas / Honor pengajar Inda / Honor pengajar petugas</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <h4>Kelengkapan pembayaran:</h4>
+                <ul class="document-list">
+                    <li class="document-item">
+                        <span class="item-number">1</span>
+                        <div>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">2</span>
+                        <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">3</span>
+                        <div>SK KPA yang mencakup nama, tugas dan fungsi serta besaran rate yang sesuai dengan ketetapan Standar Biaya Kegiatan Statistik (SBKS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">4</span>
+                        <div>Jadwal kegiatan (mengikuti ketentuan kurikulum pedoman pelatihan, 1 jamlat = 45 menit).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">5</span>
+                        <div>Daftar hadir lengkap (panitia, pengajar, dan peserta pelatihan).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">6</span>
+                        <div>Daftar rekap kuitansi / kuitansi sah (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">7</span>
+                        <div>Laporan pengajar (Innas/Inda/petugas).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">8</span>
+                        <div>SSP PPh Pasal 21 (disesuaikan dengan regulasi perpajakan yang berlaku).</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DROPDOWN 3 -->
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">Honor petugas mitra (non PNS atau PNS non BPS)</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <h4>Kelengkapan pembayaran:</h4>
+                <ul class="document-list">
+                    <li class="document-item">
+                        <span class="item-number">1</span>
+                        <div>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">2</span>
+                        <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">3</span>
+                        <div>SK KPA yang mencakup nama, tugas dan fungsi serta besaran rate yang sesuai dengan ketetapan Standar Biaya Kegiatan Statistik (SBKS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">4</span>
+                        <div>Surat kontrak / surat perjanjian kerja formal.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">5</span>
+                        <div>Daftar rekap kuitansi / kuitansi sah (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">6</span>
+                        <div>Bukti Prestasi Pekerjaan berupa Berita Acara Pemeriksaan Pekerjaan (BAPP) dan/atau Berita Acara Serah Terima Pekerjaan (BAST) sesuai klausul perjanjian.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">7</span>
+                        <div>SSP PPh Pasal 21 (disesuaikan dengan regulasi perpajakan yang berlaku).</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DROPDOWN 4 -->
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">Honor petugas (PNS BPS)</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <h4>Kelengkapan pembayaran:</h4>
+                <ul class="document-list">
+                    <li class="document-item">
+                        <span class="item-number">1</span>
+                        <div>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">2</span>
+                        <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">3</span>
+                        <div>SK KPA yang mencakup nama, tugas dan fungsi serta besaran rate yang sesuai dengan ketetapan Standar Biaya Kegiatan Statistik (SBKS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">4</span>
+                        <div>Daftar rekap kuitansi / kuitansi sah (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">5</span>
+                        <div>SSP PPh Pasal 21 (disesuaikan dengan regulasi perpajakan yang berlaku).</div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <span class="tim">TIM PENYUSUN PAK</span> | 
+        <span class="biro">BIRO KEUANGAN DAN BMN</span> | 
+        <span class="tahun">2026</span>
+    </div>
+</div>
+
+<script>
+function toggleDropdown(element) {
+    const parent = element.parentElement;
+    const content = parent.querySelector('.dropdown-isi');
+    
+    // Tutup seksi accordion lain yang aktif
+    document.querySelectorAll('.dropdown-section').forEach(section => {
+        if (section !== parent && section.classList.contains('active')) {
+            section.classList.remove('active');
+            section.querySelector('.dropdown-isi').style.maxHeight = null;
+        }
+    });
+
+    // Toggle kelas aktif seksi saat ini
+    parent.classList.toggle('active');
+
+    if (parent.classList.contains('active')) {
+        content.style.maxHeight = content.scrollHeight + "px";
+    } else {
+        content.style.maxHeight = null;
+    }
+}
+</script>
+
+</body>
+</html>

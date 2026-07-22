@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensus Ekonomi 2026 - Dashboard Ceria</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* BACKGROUND: Terang, seger, dengan gradasi warna warni lembut */
+        body {
+            background: radial-gradient(circle at 0% 0%, rgba(16, 185, 129, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 100% 0%, rgba(249, 115, 22, 0.08) 0%, transparent 40%),
+                        radial-gradient(circle at 50% 100%, rgba(0, 102, 204, 0.1) 0%, transparent 50%),
+                        #f4f7fa; 
+            min-height: 100vh;
+            padding: 3rem 1.5rem; 
+            color: #1e293b;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* GRID BACKGROUND HALUS */
+        .grid-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(rgba(0, 86, 158, 0.04) 1px, transparent 1px);
+            background-size: 30px 30px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* HEADER LOGO */
+        .header-logo-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto 2rem auto;
+            position: relative;
+            z-index: 10;
+            gap: 15px;
+        }
+
+        .logo-box {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 10px 16px;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .logo-box img {
+            height: 32px;
+            width: auto;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-title {
+            font-size: 0.75rem;
+            font-weight: 800;
+            color: #0f172a;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .logo-subtitle {
+            font-size: 0.6rem;
+            font-weight: 600;
+            color: #64748b;
+            text-transform: uppercase;
+        }
+
+        /* MAIN CARD TERANG & PLAYFUL */
+        .main-card {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #ffffff; 
+            padding: 3.5rem 3rem; 
+            border-radius: 32px;
+            box-shadow: 0 20px 60px rgba(0, 102, 204, 0.05);
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+        }
+
+        /* DEKORASI BORDER WARNA WARNI ATAS */
+        .color-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: linear-gradient(90deg, #0066cc 0%, #10b981 50%, #f97316 100%);
+        }
+
+        /* HEADER JUDUL */
+        header {
+            text-align: center;
+            margin-bottom: 4rem; 
+        }
+        
+        .badge-top {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(16, 185, 129, 0.1) 100%); 
+            color: #0066cc; 
+            padding: 0.6rem 1.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0, 102, 204, 0.15);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 850;
+            color: #0f172a;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        /* Gradasi warna tebal pada teks utama */
+        h1 span {
+            background: linear-gradient(90deg, #0066cc, #10b981, #f97316);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-top: 1rem;
+            font-weight: 500;
+        }
+
+        /* SECTION / GRID KATEGORI */
+        .section-container {
+            margin-bottom: 4rem; 
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px dashed #cbd5e1;
+        }
+
+        .section-badge {
+            color: #ffffff;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 1.3rem;
+            margin-right: 1rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Warna Cerah Menyala */
+        .bg-biru { background: linear-gradient(135deg, #0066cc, #38bdf8); }
+        .bg-hijau { background: linear-gradient(135deg, #10b981, #34d399); }
+        .bg-oranye { background: linear-gradient(135deg, #f97316, #fb923c); }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 850;
+            color: #0f172a;
+            letter-spacing: -0.5px;
+        }
+
+        /* TABEL BERGAYA MODERN & FULL COLOR */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: #ffffff;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.02);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: #475569;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            padding: 1.4rem 1.8rem; 
+            border-bottom: 2px solid #e2e8f0;
+            text-align: left;
+        }
+
+        td {
+            padding: 1.3rem 1.8rem; 
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 0.95rem;
+            color: #334155;
+            vertical-align: middle;
+            transition: all 0.25s ease;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        /* Hover Effect: Baris menyala warna warni sesuai kategori */
+        .table-biru tr:hover td {
+            background-color: rgba(0, 102, 204, 0.03); 
+            color: #0066cc;
+        }
+        .table-hijau tr:hover td {
+            background-color: rgba(16, 185, 129, 0.03); 
+            color: #10b981;
+        }
+        .table-oranye tr:hover td {
+            background-color: rgba(249, 115, 22, 0.03); 
+            color: #f97316;
+        }
+        
+        .col-no {
+            width: 8%;
+            font-weight: 800;
+            text-align: center;
+            font-size: 1rem;
+        }
+        .table-biru .col-no { color: #0066cc; }
+        .table-hijau .col-no { color: #10b981; }
+        .table-oranye .col-no { color: #f97316; }
+
+        .col-kegiatan {
+            width: 55%;
+            font-weight: 600;
+            line-height: 1.6;
+        }
+        .col-waktu {
+            width: 37%;
+        }
+        
+        /* BADGE WAKTU YANG CERAH & BOLD */
+        .time-badge {
+            display: inline-block;
+            padding: 0.6rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 800;
+            letter-spacing: 0.5px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+        
+        .tb-biru { 
+            background: #e0f2fe; 
+            color: #0369a1; 
+            border: 1px solid #bae6fd; 
+        }
+        .tb-hijau { 
+            background: #dcfce7; 
+            color: #15803d; 
+            border: 1px solid #bbf7d0; 
+        }
+        .tb-oranye { 
+            background: #ffedd5; 
+            color: #c2410c; 
+            border: 1px solid #fed7aa; 
+        }
+
+        /* RESPONSIVE LAYOUT */
+        @media (max-width: 900px) {
+            .header-logo-container {
+                justify-content: center;
+                gap: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 1.5rem 0.5rem; }
+            .main-card { padding: 2rem 1.2rem; border-radius: 20px; }
+            h1 { font-size: 2.2rem; }
+            td { padding: 1.1rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="grid-overlay"></div>
+
+<div class="header-logo-container">
+    <div class="logo-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bd/LOGO-BPS.png/800px-LOGO-BPS.png" alt="Logo BPS">
+        <div class="logo-text">
+            <span class="logo-title">Badan Pusat</span>
+            <span class="logo-subtitle">Statistik</span>
+        </div>
+    </div>
+    <div class="logo-box">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Logo_kementerian_keuangan_republik_indonesia.png/1274px-Logo_kementerian_keuangan_republik_indonesia.png" alt="Logo Kemenkeu">
+        <div class="logo-text">
+            <span class="logo-title">Kementerian</span>
+            <span class="logo-subtitle">Keuangan</span>
+        </div>
+    </div>
+</div>
+
+<div class="main-card">
+    <div class="color-bar"></div>
+    <header>
+        <div class="badge-top">📈 SENSUS EKONOMI 2026</div>
+        <h1>Jadwal & Tahapan <span>Operasional Sensus</span></h1>
+        <p class="subtitle">Pedoman Terintegrasi Administrasi dan Lapangan</p>
+    </header>
+
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-badge bg-biru">📊</div>
+            <div class="section-title">Tahap Persiapan</div>
+        </div>
+        <div class="table-responsive table-biru">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">NO</th>
+                        <th class="col-kegiatan">Nama Kegiatan</th>
+                        <th class="col-waktu">Jadwal Pelaksanaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-no">01</td>
+                        <td class="col-kegiatan">Pemeriksaan Prelist SBR</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M1 Jan – M4 Mar 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">02</td>
+                        <td class="col-kegiatan">Penetapan Prelist SBR</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">7 April 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">03</td>
+                        <td class="col-kegiatan">Kuesioner Final diterima Sekretariat SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">7 April 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">04</td>
+                        <td class="col-kegiatan">Pengadaan Instrumen dan perlengkapan petugas</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M3 Feb – M4 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">05</td>
+                        <td class="col-kegiatan">Pelaksanaan KKD dan Ngibar</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M1 Apr – M4 Agu 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">06</td>
+                        <td class="col-kegiatan">Rekrutmen Petugas Lapangan</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M3 Apr – M2 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">07</td>
+                        <td class="col-kegiatan">Internal roll-over: kuesioner CAPI</td>
+                        <td class="col-waktu"><span class="time-badge tb-biru">M2 – M3 April 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-container">
+        <div class="section-header">
+            <div class="section-badge bg-hijau">📋</div>
+            <div class="section-title">Tahap Pelatihan</div>
+        </div>
+        <div class="table-responsive table-hijau">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">NO</th>
+                        <th class="col-kegiatan">Nama Kegiatan</th>
+                        <th class="col-waktu">Jadwal Pelaksanaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-no">08</td>
+                        <td class="col-kegiatan">Workshop Intama SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M2 Desember 2025</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">09</td>
+                        <td class="col-kegiatan">Refreshing Intama SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M4 Januari 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">10</td>
+                        <td class="col-kegiatan">Pelatihan Innas SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M4 Jan – M2 Feb 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">11</td>
+                        <td class="col-kegiatan">Refreshing Innas SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M4 April 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">12</td>
+                        <td class="col-kegiatan">Pelatihan Inda SE2026 dan Petugas Task Force</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M1 Mei – M2 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">13</td>
+                        <td class="col-kegiatan">Pelatihan Petugas Lapangan SE2026</td>
+                        <td class="col-waktu"><span class="time-badge tb-hijau">M3 Mei – M2 Juni 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="section-container" style="margin-bottom: 0;">
+        <div class="section-header">
+            <div class="section-badge bg-oranye">🗂️</div>
+            <div class="section-title">Tahap Pendataan</div>
+        </div>
+        <div class="table-responsive table-oranye">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-no">NO</th>
+                        <th class="col-kegiatan">Nama Kegiatan</th>
+                        <th class="col-waktu">Jadwal Pelaksanaan</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="col-no">14</td>
+                        <td class="col-kegiatan">Pengiriman WA/e-mail massal (blasting) informasi sosialisasi SE2026 ke perusahaan</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M4 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">15</td>
+                        <td class="col-kegiatan">Melakukan blasting ulang sosialisasi ke perusahaan</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">M4 Mei 2026</span></td>
+                    </tr>
+                    <tr>
+                        <td class="col-no">16</td>
+                        <td class="col-kegiatan">WA/e-mail blasting tautan pendataan mandiri berbasis web (CAWI) ke perusahaan skala besar</td>
+                        <td class="col-waktu"><span class="time-badge tb-oranye">1 Juni 2026</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

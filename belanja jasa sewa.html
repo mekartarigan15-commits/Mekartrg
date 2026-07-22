@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENSUS EKONOMI 2026 - Kelengkapan Tagihan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* BACKGROUND TEMA MATRIKS & GRAFIK STATISTIK */
+        body {
+            background-color: #f4f7fa;
+            /* Pola Scatter Plot (Titik Koordinat Data) */
+            background-image: radial-gradient(#00569e 1px, transparent 1px), radial-gradient(#ff6b00 1px, #f4f7fa 1px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            color: #334155;
+            position: relative;
+        }
+
+        /* DEKORASI GRAFIK TREN (LINE CHART) PADA LATAR BELAKANG */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 15%;
+            right: -50px;
+            width: 350px;
+            height: 250px;
+            opacity: 0.08;
+            pointer-events: none;
+            border-bottom: 4px solid #4db848;
+            border-left: 4px solid #4db848;
+            transform: rotate(-5deg);
+            clip-path: polygon(0% 90%, 20% 50%, 40% 70%, 60% 30%, 80% 45%, 100% 10%, 100% 100%, 0% 100%);
+            background: linear-gradient(to top, rgba(77,184,72,0.2), transparent);
+        }
+
+        .main-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 56, 158, 0.06);
+            border-top: 10px solid #00569e; /* Biru Utama */
+        }
+
+        /* HEADER DENGAN AKSEN TIGA WARNA */
+        .header-top {
+            text-align: center;
+            margin-bottom: 3.5rem;
+        }
+        .header-top h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #00569e;
+            letter-spacing: -0.5px;
+        }
+        .header-top h1 span {
+            color: #ff6b00; /* Oranye */
+        }
+        .header-badge {
+            display: inline-block;
+            background-color: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0; /* Hijau */
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ACCORDION / DROPDOWN STYLE */
+        .dropdown-section {
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            background: #ffffff;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02);
+            transition: all 0.3s ease;
+        }
+        .dropdown-section:hover {
+            border-color: #b3d4f0;
+            box-shadow: 0 10px 15px -3px rgba(0, 56, 158, 0.05);
+        }
+        
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            cursor: pointer;
+            background: #ffffff;
+            user-select: none;
+            gap: 1.5rem;
+        }
+        .dropdown-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.4;
+        }
+        
+        /* Ikon Panah Minimalis */
+        .dropdown-arrow {
+            width: 32px;
+            height: 32px;
+            background-color: #f1f5f9;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+        }
+        .dropdown-arrow::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-right: 2.5px solid #64748b;
+            border-bottom: 2.5px solid #64748b;
+            transform: rotate(45deg);
+            margin-top: -4px;
+            transition: transform 0.3s ease;
+        }
+        
+        /* State Saat Terbuka */
+        .dropdown-section.active {
+            border-left: 5px solid #ff6b00; /* Border samping Oranye saat aktif */
+        }
+        .dropdown-section.active .dropdown-title {
+            color: #00569e;
+        }
+        .dropdown-section.active .dropdown-arrow {
+            background-color: #fff0e6;
+        }
+        .dropdown-section.active .dropdown-arrow::before {
+            border-color: #ff6b00;
+            transform: rotate(-135deg);
+            margin-top: 4px;
+        }
+
+        /* ISI CONTENT DENGAN ANIMASI HALUS */
+        .dropdown-isi {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #f8fafc;
+        }
+        .dropdown-isi-inner {
+            padding: 2rem;
+            border-top: 1px solid #f1f5f9;
+        }
+        
+        .dropdown-isi h3 {
+            font-size: 1.2rem;
+            color: #0f172a;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dropdown-isi h3::before {
+            content: "";
+            width: 4px;
+            height: 18px;
+            background-color: #4db848; /* Tag Hijau */
+            border-radius: 2px;
+        }
+
+        /* CARD LIST UNTUK BUTIRAN DOKUMEN */
+        .document-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .document-item {
+            background: #ffffff;
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            color: #334155;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        .item-number {
+            background-color: #e6f0fa;
+            color: #00569e;
+            font-weight: 700;
+            min-width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        /* Sub-List (Huruf a, b, c) */
+        .sub-document-list {
+            list-style: none;
+            margin-top: 0.75rem;
+            padding-left: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            width: 100%;
+        }
+        .sub-document-item {
+            background-color: #f8fafc;
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            border-left: 3px solid #ff6b00;
+            font-size: 0.9rem;
+            color: #475569;
+        }
+        .text-note {
+            font-style: italic;
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            padding-left: 2.75rem;
+        }
+
+        /* FOOTER MODERN */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .footer span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .tim { color: #ff6b00; }
+        .biro { color: #00569e; }
+        .tahun { color: #4db848; }
+
+        @media (max-width: 768px) {
+            body { padding: 1.5rem 0.5rem; }
+            .main-container { padding: 1.5rem; border-radius: 16px; }
+            .header-top h1 { font-size: 1.6rem; }
+            .dropdown-header { padding: 1rem; }
+            .dropdown-title { font-size: 0.95rem; }
+            .dropdown-isi-inner { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="header-top">
+        <h1>SENSUS EKONOMI <span>2026</span></h1>
+        <div class="header-badge">Kelengkapan Tagihan Pembayaran</div>
+    </div>
+
+    <!-- DROPDOWN PERTAMA -->
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">DEKORASI STAN PAMERAN SEBAGAI SARANA PROMOSI PRODUK STATISTIK SE2026 (PROVINSI)</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <h3>Daftar Dokumen Pendukung</h3>
+                <ul class="document-list">
+                    <li class="document-item">
+                        <span class="item-number">1</span>
+                        <div>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">2</span>
+                        <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item" style="flex-direction: column;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <span class="item-number">3</span>
+                            <div>Komitmen dalam bentuk kontrak dapat berupa:</div>
+                        </div>
+                        <ul class="sub-document-list">
+                            <li class="sub-document-item"><strong>a.</strong> Bukti Pembelian/Pembayaran (nilai pengadaan paling banyak Rp10.000.000,00);</li>
+                            <li class="sub-document-item"><strong>b.</strong> Kuitansi (nilai pengadaan paling banyak Rp50.000.000,00);</li>
+                            <li class="sub-document-item"><strong>c.</strong> Surat Perintah Kerja (nilai pengadaan di atas Rp50.000.000,00 s.d Rp200.000.000,00);</li>
+                            <li class="sub-document-item"><strong>d.</strong> Surat Perjanjian (nilai pengadaan di atas Rp200.000.000,00); dan/atau</li>
+                            <li class="sub-document-item"><strong>e.</strong> Surat/Bukti Pesanan (Jika menggunakan E-Purchasing).</li>
+                        </ul>
+                        <div class="text-note">* Sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang/jasa pemerintah.</div>
+                    </li>
+                    <li class="document-item" style="flex-direction: column;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <span class="item-number">4</span>
+                            <div>Bukti Prestasi Pekerjaan dapat berupa:</div>
+                        </div>
+                        <ul class="sub-document-list">
+                            <li class="sub-document-item"><strong>a.</strong> Berita Acara Penyelesaian Pekerjaan;</li>
+                            <li class="sub-document-item"><strong>b.</strong> Berita Acara Serah Terima Pekerjaan/Barang;</li>
+                            <li class="sub-document-item"><strong>c.</strong> Berita Acara Pembayaran;</li>
+                            <li class="sub-document-item"><strong>d.</strong> Berita Acara Kemajuan Pekerjaan; dan/atau</li>
+                            <li class="sub-document-item"><strong>e.</strong> Bukti Penyelesaian Pekerjaan lainnya.</li>
+                        </ul>
+                        <div class="text-note">* Sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang dan jasa pemerintah.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">5</span>
+                        <div>Fotokopi NPWP dan fotokopi rekening koran (jika diperlukan).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">6</span>
+                        <div>Invoice / Faktur Tagihan.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">7</span>
+                        <div>Fotocopy SIM/KTP dan STNK (untuk sewa kendaraan perorangan).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">8</span>
+                        <div>Faktur Pajak.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">9</span>
+                        <div>SSP PPN sesuai aturan yang berlaku dikenakan atas Pengusaha Kena Pajak (PKP), untuk transaksi diatas 2 juta rupiah.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">10</span>
+                        <div>SSP PPh Pasal 4 ayat 2 Final sebesar 10% untuk sewa bangunan/ruangan selain hotel atau penginapan.</div>
+                    </li>
+                    <li class="document-item" style="flex-direction: column;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <span class="item-number">11</span>
+                            <div>SSP PPh pasal 23 sebesar 2% dengan ketentuan sebagai berikut:</div>
+                        </div>
+                        <ul class="sub-document-list">
+                            <li class="sub-document-item"><strong>a.</strong> PPh 23 dikenakan tanpa minimal pembelian.</li>
+                            <li class="sub-document-item"><strong>b.</strong> NPWP yang digunakan adalah NPWP rekanan. Jika tidak memiliki NPWP usaha, menggunakan NIK pemilik dengan tarif PPh 21 sebesar 50% x 5% dari nilai tagihan.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- DROPDOWN KEDUA -->
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">SEWA STAN PAMERAN SEBAGAI SARANA PROMOSI PRODUK STATISTIK SE2026 (PROVINSI)</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <h3>Daftar Dokumen Pendukung</h3>
+                <ul class="document-list">
+                    <li class="document-item">
+                        <span class="item-number">1</span>
+                        <div>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">2</span>
+                        <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                    </li>
+                    <li class="document-item" style="flex-direction: column;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <span class="item-number">3</span>
+                            <div>Komitmen dalam bentuk kontrak dapat berupa:</div>
+                        </div>
+                        <ul class="sub-document-list">
+                            <li class="sub-document-item"><strong>a.</strong> Bukti Pembelian/Pembayaran (nilai pengadaan paling banyak Rp10.000.000,00);</li>
+                            <li class="sub-document-item"><strong>b.</strong> Kuitansi (nilai pengadaan paling banyak Rp50.000.000,00);</li>
+                            <li class="sub-document-item"><strong>c.</strong> Surat Perintah Kerja (nilai pengadaan di atas Rp50.000.000,00 s.d Rp200.000.000,00);</li>
+                            <li class="sub-document-item"><strong>d.</strong> Surat Perjanjian (nilai pengadaan di atas Rp200.000.000,00); dan/atau</li>
+                            <li class="sub-document-item"><strong>e.</strong> Surat/Bukti Pesanan (Jika menggunakan E-Purchasing).</li>
+                        </ul>
+                        <div class="text-note">* Sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang/jasa pemerintah.</div>
+                    </li>
+                    <li class="document-item" style="flex-direction: column;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <span class="item-number">4</span>
+                            <div>Bukti Prestasi Pekerjaan dapat berupa:</div>
+                        </div>
+                        <ul class="sub-document-list">
+                            <li class="sub-document-item"><strong>a.</strong> Berita Acara Penyelesaian Pekerjaan;</li>
+                            <li class="sub-document-item"><strong>b.</strong> Berita Acara Serah Terima Pekerjaan/Barang;</li>
+                            <li class="sub-document-item"><strong>c.</strong> Berita Acara Pembayaran;</li>
+                            <li class="sub-document-item"><strong>d.</strong> Berita Acara Kemajuan Pekerjaan; dan/atau</li>
+                            <li class="sub-document-item"><strong>e.</strong> Bukti Penyelesaian Pekerjaan lainnya.</li>
+                        </ul>
+                        <div class="text-note">* Sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang dan jasa pemerintah.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">5</span>
+                        <div>Fotokopi NPWP dan fotokopi rekening koran (jika diperlukan).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">6</span>
+                        <div>Invoice / Faktur Tagihan.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">7</span>
+                        <div>Fotocopy SIM/KTP dan STNK (untuk sewa kendaraan perorangan).</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">8</span>
+                        <div>Faktur Pajak.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">9</span>
+                        <div>SSP PPN sesuai aturan yang berlaku dikenakan atas Pengusaha Kena Pajak (PKP), untuk transaksi diatas 2 juta rupiah.</div>
+                    </li>
+                    <li class="document-item">
+                        <span class="item-number">10</span>
+                        <div>SSP PPh Pasal 4 ayat 2 Final sebesar 10% untuk sewa bangunan/ruangan selain hotel atau penginapan.</div>
+                    </li>
+                    <li class="document-item" style="flex-direction: column;">
+                        <div style="display: flex; gap: 0.75rem;">
+                            <span class="item-number">11</span>
+                            <div>SSP PPh pasal 23 sebesar 2% dengan ketentuan sebagai berikut:</div>
+                        </div>
+                        <ul class="sub-document-list">
+                            <li class="sub-document-item"><strong>a.</strong> PPh 23 dikenakan tanpa minimal pembelian.</li>
+                            <li class="sub-document-item"><strong>b.</strong> NPWP yang digunakan adalah NPWP rekanan. Jika tidak memiliki NPWP usaha, menggunakan NIK pemilik dengan tarif PPh 21 sebesar 50% x 5% dari nilai tagihan.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER SECTION -->
+    <div class="footer">
+        <span class="tim">TIM PENYUSUN PAK</span>
+        <span class="slate">|</span>
+        <span class="biro">BIRO KEUANGAN DAN BMN</span>
+        <span class="slate">|</span>
+        <span class="tahun">2026</span>
+    </div>
+</div>
+
+<script>
+function toggleDropdown(element) {
+    const parent = element.parentElement;
+    const content = parent.querySelector('.dropdown-isi');
+    
+    // Tutup dropdown lain yang sedang terbuka (Efek Accordion)
+    document.querySelectorAll('.dropdown-section').forEach(section => {
+        if (section !== parent && section.classList.contains('active')) {
+            section.classList.remove('active');
+            section.querySelector('.dropdown-isi').style.maxHeight = null;
+        }
+    });
+
+    // Toggle kelas aktif pada elemen yang diklik
+    parent.classList.toggle('active');
+
+    if (parent.classList.contains('active')) {
+        // Mengatur max-height sesuai dengan tinggi konten aslinya secara dinamis
+        content.style.maxHeight = content.scrollHeight + "px";
+    } else {
+        content.style.maxHeight = null;
+    }
+}
+</script>
+
+</body>
+</html>

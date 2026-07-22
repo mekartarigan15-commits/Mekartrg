@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BELANJA PERJALANAN BIASA - SENSUS EKONOMI 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* BACKGROUND TEMA MATRIKS DATA & GRAFIK STATISTIK */
+        body {
+            background-color: #f6f9fc;
+            background-image: radial-gradient(#00569e 1px, transparent 1px), radial-gradient(#ff6b00 1px, #f6f9fc 1px);
+            background-size: 32px 32px;
+            background-position: 0 0, 16px 16px;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+            color: #334155;
+            position: relative;
+        }
+
+        /* DEKORASI KURVA GRAFIK TREN DI LATAR BELAKANG */
+        body::before {
+            content: "";
+            position: fixed;
+            bottom: 5%;
+            left: -30px;
+            width: 400px;
+            height: 250px;
+            opacity: 0.06;
+            pointer-events: none;
+            border-bottom: 5px solid #00569e;
+            border-left: 5px solid #00569e;
+            transform: rotate(3deg);
+            clip-path: polygon(0% 85%, 15% 60%, 35% 75%, 55% 40%, 75% 55%, 100% 15%, 100% 100%, 0% 100%);
+            background: linear-gradient(to top, rgba(0, 86, 158, 0.3), transparent);
+        }
+
+        .main-container {
+            max-width: 1050px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.97);
+            padding: 3.5rem 3rem;
+            border-radius: 24px;
+            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.05);
+            border-top: 10px solid #00569e;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* HEADER ELEGAN */
+        .header-top {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .header-top h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #00569e;
+            letter-spacing: -0.5px;
+            margin-bottom: 0.25rem;
+        }
+        .header-top h2 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #ff6b00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .header-badge {
+            display: inline-block;
+            background-color: #f0fdf4;
+            color: #166534;
+            border: 1px solid #bbf7d0;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-top: 1rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* SECTION ACCORDION (DROPDOWN KEGIATAN) */
+        .dropdown-section {
+            margin-bottom: 1.25rem;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            background: #ffffff;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.01);
+        }
+        .dropdown-section:hover {
+            border-color: #cbd5e1;
+            box-shadow: 0 10px 20px -5px rgba(15, 23, 42, 0.04);
+        }
+        
+        .dropdown-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            cursor: pointer;
+            background: #ffffff;
+            user-select: none;
+            gap: 1.5rem;
+        }
+        .dropdown-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        
+        /* Arrow Bulat Minimalis */
+        .dropdown-arrow {
+            width: 36px;
+            height: 36px;
+            background-color: #f8fafc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            border: 1px solid #e2e8f0;
+        }
+        .dropdown-arrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-right: 2px solid #64748b;
+            border-bottom: 2px solid #64748b;
+            transform: rotate(45deg);
+            margin-top: -3px;
+            transition: transform 0.3s ease;
+        }
+        
+        /* State Aktif Dropdown */
+        .dropdown-section.active {
+            border-left: 5px solid #ff6b00;
+            border-color: #cbd5e1;
+        }
+        .dropdown-section.active .dropdown-title {
+            color: #00569e;
+        }
+        .dropdown-section.active .dropdown-arrow {
+            background-color: #fff0e6;
+            border-color: #ffd1b3;
+        }
+        .dropdown-section.active .dropdown-arrow::before {
+            border-color: #ff6b00;
+            transform: rotate(-135deg);
+            margin-top: 3px;
+        }
+
+        /* KONTEN DROPDOWN ISI */
+        .dropdown-isi {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: #f8fafc;
+        }
+        .dropdown-isi-inner {
+            padding: 1.5rem 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .dropdown-isi ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+        }
+        .dropdown-isi li {
+            font-size: 0.95rem;
+            color: #475569;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            line-height: 1.5;
+        }
+        .dropdown-isi li::before {
+            content: "•";
+            color: #ff6b00;
+            font-weight: bold;
+            font-size: 1.2rem;
+            line-height: 1;
+            margin-top: -2px;
+        }
+
+        /* SECTION KELENGKAPAN TAGIHAN (STATIS / TANPA DROPDOWN) */
+        .tagihan-section {
+            margin-top: 2.5rem;
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 2.5rem;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.02);
+        }
+        .tagihan-title {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .tagihan-title::before {
+            content: "";
+            width: 5px;
+            height: 22px;
+            background-color: #4db848;
+            border-radius: 4px;
+        }
+        
+        /* STRUKTUR LIST ITEM DOKUMEN */
+        .document-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .document-item {
+            background: #f8fafc;
+            padding: 1.1rem 1.4rem;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            font-size: 0.95rem;
+            color: #334155;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.85rem;
+            transition: background-color 0.2s ease;
+        }
+        .document-item:hover {
+            background: #f1f5f9;
+        }
+        .item-number {
+            background-color: #e6f0fa;
+            color: #00569e;
+            font-weight: 700;
+            min-width: 26px;
+            height: 26px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .catatan-kecil {
+            font-size: 0.85rem;
+            font-style: italic;
+            color: #64748b;
+            margin-top: 0.4rem;
+            display: block;
+            line-height: 1.5;
+        }
+
+        /* FOOTER KONTRASTING */
+        .footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+            text-align: center;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #64748b;
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .tim { color: #ff6b00; }
+        .biro { color: #00569e; }
+        .tahun { color: #4db848; }
+
+        /* RESPONSIVE LAYOUT */
+        @media (max-width: 768px) {
+            body { padding: 1.5rem 0.5rem; }
+            .main-container { padding: 2rem 1.25rem; border-radius: 16px; }
+            .header-top h1 { font-size: 1.6rem; }
+            .dropdown-header { padding: 1.25rem 1rem; }
+            .dropdown-title { font-size: 0.95rem; }
+            .dropdown-isi-inner { padding: 1.25rem 1rem; }
+            .tagihan-section { padding: 1.5rem 1rem; border-radius: 14px; }
+            .document-item { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-container">
+    <div class="header-top">
+        <h1>BELANJA PERJALANAN BIASA</h1>
+        <h2>Sensus Ekonomi 2026</h2>
+        <div class="header-badge">Matriks Ruang Lingkup & Kelengkapan Pertanggungjawaban SPJ</div>
+    </div>
+
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">Perjalanan Dinas BPS Provinsi</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <ul>
+                    <li>Perjalanan Pengecekan Perubahan Satuan Lingkungan Setempat SE2026 Provinsi ke Kabupaten</li>
+                    <li>Perjalanan pengolahan peta hasil SE2026 Provinsi ke Kabupaten</li>
+                    <li>Perjalanan supervisi pelaksanaan lapangan ke Kabupaten/Kota</li>
+                    <li>Perjalanan supervisi Provinsi</li>
+                    <li>Perjalanan supervisi Provinsi pelatihan petugas</li>
+                    <li>Supervisi kegiatan oleh BPS Prov</li>
+                    <li>Supervisi lapangan register usaha Provinsi</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="dropdown-section">
+        <div class="dropdown-header" onclick="toggleDropdown(this)">
+            <div class="dropdown-title">Perjalanan Dinas BPS Pusat</div>
+            <div class="dropdown-arrow"></div>
+        </div>
+        <div class="dropdown-isi">
+            <div class="dropdown-isi-inner">
+                <ul>
+                    <li>Perjalanan Dinas Publisitas SE2026</li>
+                    <li>Perjalanan Dinas dalam rangka Sosialisasi Sensus Ekonomi 2026</li>
+                    <li>Perjalanan Dinas eksternal dalam rangka Sosialisasi Sensus Ekonomi 2026</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="tagihan-section">
+        <div class="tagihan-title">Kelengkapan Tagihan Pembayaran</div>
+        <div class="tagihan-isi">
+            <ul class="document-list">
+                <li class="document-item">
+                    <span class="item-number">1</span>
+                    <div>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS).</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">2</span>
+                    <div>Surat Tugas resmi yang ditandatangani pejabat berwenang.</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">3</span>
+                    <div>
+                        SPD dan visum yang telah ditandatangani oleh PPK dan pejabat di tempat pelaksanaan Perjalanan Dinas biasa atau pihak terkait yang menjadi Tempat Tujuan Perjalanan Dinas biasa.
+                        <span class="catatan-kecil">* Penandatangan Visum SPD adalah pejabat yang ditunjuk/berwenang/PLT/PLH (BPS setempat/instansi yang mengundang/tempat kegiatan). Diutamakan dilengkapi dengan cap dinas dan diwajibkan terdapat nama terang serta jabatan formal.</span>
+                    </div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">4</span>
+                    <div>Rincian Biaya Perjalanan dinas biasa atau DOP (teregister resmi dari aplikasi BOS).</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">5</span>
+                    <div>Tiket & boarding pass untuk pesawat dan kereta api, tiket bus, atau tiket moda transportasi resmi lainnya.</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">6</span>
+                    <div>Kuitansi Pembayaran Bukti Penginapan. Jika membeli melalui agen travel, bukti pembelian harus dilengkapi dengan stempel/cap hotel atau surat pernyataan menginap di hotel tersebut. Jika tidak menginap di hotel/penginapan harus menyertakan Surat Pernyataan Tidak Menginap di Hotel.</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">7</span>
+                    <div>Bukti pembayaran hotel atau tempat menginap lainnya atau surat pernyataan sah jika tidak menginap.</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">8</span>
+                    <div>Dalam hal bukti pengeluaran transportasi dan/atau bukti pembayaran hotel atau tempat menginap lainnya tidak ada, pertanggungjawaban biaya Perjalanan Dinas biasa dapat menggunakan Daftar Pengeluaran Riil yang telah ditandatangani oleh yang bersangkutan dan disetujui oleh PPK (berlaku untuk selain komponen lumpsum).</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">9</span>
+                    <div>
+                        Surat pernyataan tidak menggunakan kendaraan dinas untuk pembayaran transpor yang bersifat lumpsum.
+                        <span class="catatan-kecil">* Pihak lain adalah pihak selain pejabat negara/pegawai Aparatur Sipil Negara/prajurit TNI/anggota POLRI.</span>
+                    </div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">10</span>
+                    <div>Laporan pelaksanaan perjalanan dinas komprehensif beserta lampiran dokumentasi foto kegiatan.</div>
+                </li>
+                <li class="document-item">
+                    <span class="item-number">11</span>
+                    <div>Kuitansi perjalanan dinas cetakan sistem (dari aplikasi BOS).</div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <span class="tim">TIM PENYUSUN PAK</span> | 
+        <span class="biro">BIRO KEUANGAN DAN BMN</span> | 
+        <span class="tahun">2026</span>
+    </div>
+</div>
+
+<script>
+function toggleDropdown(element) {
+    const parent = element.parentElement;
+    const content = parent.querySelector('.dropdown-isi');
+    
+    // Tutup seksi accordion lain yang aktif jika ada
+    document.querySelectorAll('.dropdown-section').forEach(section => {
+        if (section !== parent && section.classList.contains('active')) {
+            section.classList.remove('active');
+            section.querySelector('.dropdown-isi').style.maxHeight = null;
+        }
+    });
+
+    // Toggle kelas aktif seksi saat ini
+    parent.classList.toggle('active');
+
+    if (parent.classList.contains('active')) {
+        content.style.maxHeight = content.scrollHeight + "px";
+    } else {
+        content.style.maxHeight = null;
+    }
+}
+</script>
+
+</body>
+</html>

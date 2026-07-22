@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belanja Bahan Sensus Ekonomi 2026</title>
+    <style>
+        :root {
+            --se-orange-main: #F5A623;
+            --se-orange-dark: #D48806;
+            --se-orange-light: #FFF9F0;
+            --se-dark-bg: #1E2530;
+            --se-gray-card: #FFFFFF;
+            --text-main: #1A202C; /* Hitam pekat untuk keterbacaan maksimal */
+            --text-muted: #4A5568;
+            --border-color: #CBD5E0;
+            --bg-body: #F0F4F8;
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header Jauh Lebih Besar, Mewah, & Menarik */
+        .header-se {
+            background: linear-gradient(135deg, #1E2530 0%, #0F141C 100%);
+            padding: 60px 5px; /* Padding vertikal diperbesar untuk ruang yang megah */
+            text-align: center;
+            border-bottom: 6px solid var(--se-orange-main);
+            box-shadow: var(--shadow-md);
+            position: relative;
+        }
+
+        .header-title-sub {
+            color: var(--se-orange-main);
+            font-size: 38px; /* Ukuran sangat besar */
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin: 0;
+            padding: 0;
+            line-height: 1.2;
+        }
+
+        .header-title-main {
+            color: #FFFFFF;
+            font-size: 46px; /* Ukuran super besar dan dominan */
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin: 10px 0 0 0;
+            padding: 0;
+            line-height: 1.2;
+            text-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Container Dropdown Utama */
+        .menu-container {
+            max-width: 85%;
+            margin: 50px auto;
+            padding: 0;
+        }
+
+        /* Komponen Accordion Modern */
+        details {
+            background-color: var(--se-gray-card);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        details:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--se-orange-main);
+            transform: translateY(-2px);
+        }
+
+        /* Header Dropdown (Summary) */
+        summary {
+            padding: 30px 40px;
+            font-size: 24px;
+            font-weight: 800;
+            color: #1A202C;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            list-style: none;
+            user-select: none;
+            background: linear-gradient(to right, #FFFFFF, #F8FAFC);
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary div span {
+            color: var(--se-orange-main);
+            margin-left: 8px;
+        }
+
+        /* Icon Panah Animasi Tebal */
+        summary::after {
+            content: '';
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-right: 3.5px solid var(--text-main);
+            border-bottom: 3.5px solid var(--text-main);
+            transform: rotate(45deg);
+            transition: transform 0.25s ease;
+            margin-right: 10px;
+        }
+
+        details[open] summary::after {
+            transform: rotate(-135deg);
+        }
+
+        details[open] summary {
+            border-bottom: 2px solid var(--border-color);
+            background: linear-gradient(to right, #F8FAFC, #EDF2F7);
+        }
+
+        /* Area Konten Utama */
+        .content-inner {
+            padding: 40px 50px;
+            font-size: 18px;
+            color: var(--text-main);
+            background-color: #FFFFFF;
+        }
+
+        /* Kotak Cakupan Kegiatan / Highlight */
+        .ruang-lingkup {
+            background-color: #EDF2F7;
+            border-left: 6px solid var(--se-dark-bg);
+            padding: 25px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+        }
+
+        .ruang-lingkup strong {
+            color: var(--se-dark-bg);
+            font-size: 19px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: block;
+            margin-bottom: 12px;
+        }
+
+        .ruang-lingkup ul {
+            margin: 0;
+            padding-left: 25px;
+        }
+
+        .ruang-lingkup li {
+            color: #2D3748;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        /* Sub-Judul Bagian Dokumen */
+        .sub-judul {
+            font-weight: 800;
+            font-size: 20px;
+            margin-top: 40px;
+            margin-bottom: 18px;
+            color: #000000;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .sub-judul::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 22px;
+            background-color: var(--se-orange-main);
+            margin-right: 12px;
+            border-radius: 3px;
+        }
+
+        .content-inner p {
+            margin: 0 0 25px 0;
+            text-align: justify;
+            color: var(--text-main);
+        }
+
+        /* List Gaya Modern & Rapi */
+        .content-inner ul, .content-inner ol {
+            margin: 0 0 30px 0;
+            padding-left: 25px;
+        }
+
+        .content-inner li {
+            margin-bottom: 12px;
+            text-align: justify;
+        }
+
+        .content-inner li ul {
+            margin-top: 10px;
+            margin-bottom: 0;
+            padding-left: 25px;
+            list-style-type: square;
+        }
+
+        /* Panel Perpajakan Premium */
+        .tax-card {
+            background-color: var(--se-orange-light);
+            border: 2px solid rgba(245, 166, 35, 0.4);
+            border-left: 6px solid var(--se-orange-main);
+            padding: 30px;
+            margin: 40px 0 10px 0;
+            border-radius: 8px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .tax-card-title {
+            font-weight: 900;
+            font-size: 20px;
+            color: #B7791F;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .tax-card strong {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            color: #7B341E;
+            font-size: 19px;
+        }
+
+        .tax-card strong:first-of-type {
+            margin-top: 0;
+        }
+
+        .tax-card ul {
+            margin-bottom: 20px;
+        }
+
+        .tax-card ul:last-child {
+            margin-bottom: 0;
+        }
+
+        .italic-note {
+            font-style: italic;
+            color: #718096;
+            margin-top: -20px;
+            margin-bottom: 30px;
+            display: block;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        /* Footer Resmi */
+        .footer-note {
+            text-align: center;
+            padding: 40px 0;
+            font-size: 14px;
+            color: #718096;
+            letter-spacing: 2px;
+            font-weight: 700;
+            border-top: 2px solid var(--border-color);
+            margin-top: 80px;
+            background-color: #FFFFFF;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-se">
+        <h2 class="header-title-sub">Belanja Bahan</h2>
+        <h1 class="header-title-main">Sensus Ekonomi 2026</h1>
+    </div>
+
+    <div class="menu-container">
+
+        <details>
+            <summary>
+                <div>🍔 Biaya <span>Konsumsi</span></div>
+            </summary>
+            <div class="content-inner">
+                <div class="ruang-lingkup">
+                    <strong>📌 Komponen Belanja Konsumsi:</strong>
+                    <ul>
+                        <li>Konsumsi pelatihan petugas pengolahan peta</li>
+                        <li>Konsumsi rapat pertemuan tim petugas kab/kota</li>
+                    </ul>
+                </div>
+                
+                <p>Satuan biaya konsumsi rapat/pertemuan merupakan satuan biaya yang digunakan untuk kebutuhan biaya pengadaan makanan dan kudapan termasuk minuman untuk rapat/pertemuan baik untuk rapat koordinasi tingkat menteri/wakil menteri/eselon I/setara maupun untuk rapat biasa dan dilaksanakan secara luring (offline) paling singkat selama 2 (dua) jam. Rapat koordinasi tingkat menteri/wakil menteri/eselon I/setara adalah rapat koordinasi yang pesertanya menteri/wakil menteri/eselon I/pejabat yang setara.</p>
+                
+                <div class="sub-judul">📝 Catatan Penting</div>
+                <ul>
+                    <li>Konsumsi Rapat berupa makan dan kudapan termasuk minuman dapat diberikan jika melibatkan unit eselon I lainnya/kementerian /lembaga lainnya/instansi pemerintah/pihak lain. Pihak lain tersebut antara lain mitra petugas sensus/survei, wartawan, dan lain sebagainya;</li>
+                    <li>Konsumsi Rapat berupa kudapan termasuk minuman dapat diberikan jika melibatkan satker/eselon II lainnya/setara;</li>
+                    <li>Yang dimaksud satker lainnya adalah kantor vertikal berdasarkan struktur organisasi;</li>
+                    <li>Pajak yang dikenakan atas belanja konsumsi dapat berupa PPh pasal 22 atau PPh pasal 23 tergantung jenis barang/jasa, bukti kuitansi, dan sarana/alat penyajian. Rekanan yang dikenakan PPh Pasal 23 namun tidak memiliki NPWP usaha, maka menggunakan NIK pemilik usaha dengan tarif PPh 21 sebesar 50% x 5% dari nilai tagihan.</li>
+                </ul>
+
+                <div class="sub-judul">📂 Kelengkapan Tagihan Pembayaran</div>
+                <ol>
+                    <li>Kerangka Acuan Kegiatan yang diajukan oleh Penanggung Jawab kegiatan dan diketahui oleh PPK;</li>
+                    <li>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS);</li>
+                    <li>Undangan;</li>
+                    <li>Daftar hadir;</li>
+                    <li>Notula;</li>
+                    <li>Komitmen dalam bentuk kontrak dapat berupa:
+                        <ul>
+                            <li>a. Bukti Pembelian/Pembayaran (nilai pengadaan paling banyak Rp10.000.000,00 (sepuluh juta rupiah));</li>
+                            <li>b. Kuitansi (nilai pengadaan paling banyak Rp50.000.000,00 (lima puluh juta rupiah));</li>
+                            <li>c. Surat Perintah Kerja (nilai pengadaan bernilai di atas Rp50.000.000,00 (lima puluh juta rupiah sampai dengan Rp200.000.000,00 (dua ratus juta rupiah));</li>
+                            <li>d. Surat Perjanjian (nilai pengadaan di atas Rp200.000.000,00 (dua ratus juta rupiah)); dan/atau</li>
+                            <li>e. Surat/Bukti Pesanan (jika menggunakan E-Purchasing).</li>
+                        </ul>
+                    </li>
+                </ol>
+                <span class="italic-note">sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang/jasa pemerintah;</span>
+
+                <div class="sub-judul">✅ Bukti Prestasi Pekerjaan</div>
+                <ul>
+                    <li>a. Berita Acara Penyelesaian Pekerjaan;</li>
+                    <li>b. Berita Acara Serah Terima Pekerjaan/Barang;</li>
+                    <li>c. Berita Acara Pembayaran;</li>
+                    <li>d. Berita Acara Kemajuan Pekerjaan; dan/atau</li>
+                    <li>e. Bukti Penyelesaian Pekerjaan lainnya.</li>
+                </ul>
+                <span class="italic-note">bukti prestasi pekerjaan tersebut sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang dan jasa pemerintah;</span>
+
+                <div class="tax-card">
+                    <span class="tax-card-title">⚖️ Ketentuan Pemotongan Pajak Konsumsi</span>
+                    
+                    <strong>Surat Setoran Pajak (SSP) PPh 22 sebesar 1,5% (jika membeli konsumsi di warung/toko):</strong>
+                    <ul>
+                        <li>a. PPh 22 dikenakan untuk pengadaan/pembelian diatas 2 juta;</li>
+                        <li>b. PPh 22 dikecualikan untuk: Pembayaran menggunakan kartu kredit pemerintah (KKP); BBM, Benda Pos, Air, Telepon dan Listrik;</li>
+                        <li>c. NPWP yang digunakan adalah NPWP rekanan. Jika rekanan tidak memiliki NPWP, maka menggunakan NIK pemilik usaha;</li>
+                        <li>d. Jika menggunakan jasa katering dengan penyajian dalam kemasan;</li>
+                    </ul>
+                    
+                    <strong>SSP PPh 23 sebesar 2% (jika membeli konsumsi melalui jasa katering dengan peralatan dan perlengkapan untuk proses pembuatan, penyimpanan sampai penyajian):</strong>
+                    <ul>
+                        <li>a. PPh 23 dikenakan tanpa minimal pembelian;</li>
+                        <li>b. NPWP yang digunakan adalah NPWP usaha rekanan. Jika rekanan tidak memiliki NPWP usaha, maka menggunakan NIK pemilik usaha dengan tarif PPh 21 sebesar 50% x 5% dari nilai tagihan.</li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <div>🌐 Biaya <span>Paket Data Pelaksanaan SE2026</span></div>
+            </summary>
+            <div class="content-inner">
+                <p>Biaya pulsa/paket data adalah bantuan biaya yang diberikan kepada pegawai/petugas mitra BPS lain yang dalam pelaksanaan tugasnya sebagian besar membutuhkan komunikasi secara daring (online). Pemberian biaya pulsa/paket data dilakukan secara selektif dengan mempertimbangkan intensitas pelaksanaan tugas dan fungsi penggunaan media daring (online) dan ketersediaan anggaran, dan sesuai dengan prinsip tata kelola yang baik dan akuntabilitas.</p>
+                <p>Belanja pulsa/paket data pada kegiatan sensus/survei merupakan biaya yang diberikan kepada pegawai/petugas guna mendukung rangkaian kegiatan sensus/survei seperti pelatihan petugas secara daring (online), paket data untuk kegiatan lapangan.</p>
+                
+                <div class="sub-judul">📝 Catatan Penting</div>
+                <ul>
+                    <li>Berdasarkan PMK 32 Tahun 2025 tentang SBM 2026 satuan biaya pulsa/paket data sudah tidak diatur, namun mengingat bahwa kebutuhan paket data dan komunikasi untuk petugas kegiatan statistik (sensus dan survei) dibutuhkan dalam rangka pelaksanaan tugas dan fungsi dalam pencapaian keluaran (output) dan Sasaran Strategis Program BPS, sehingga satuan biaya pulsa/paket data diatur berdasarkan Surat Plt. Sestama Nomor B-446/02100/PR.130/2025 Tanggal 26 Agustus 2025 perihal Standar Biaya Paket Data dan Asuransi;</li>
+                    <li>Pengadaan pulsa/paket data mengikuti isi perjanjian/surat kontrak, pedoman teknis kegiatan sensus/survei, atau surat edaran dari pimpinan BPS;</li>
+                    <li>Penggantian pulsa/paket data yang dapat diganti adalah nomor prabayar.</li>
+                </ul>
+
+                <div class="sub-judul">📂 Kelengkapan Tagihan Pembayaran</div>
+                <ol>
+                    <li>Kerangka Acuan Kegiatan yang diajukan oleh Penanggungjawab kegiatan dan diketahui oleh PPK;</li>
+                    <li>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK)(dari aplikasi BOS);</li>
+                    <li>Dokumen Komitmen Pengadaan Barang/Jasa:
+                        <ul>
+                            <li>a. Bukti Pembelian/Pembayaran (nilai pengadaan paling banyak Rp10.000.000 (sepuluh juta rupiah));</li>
+                            <li>b. Kuitansi (nilai pengadaan paling banyak Rp50.000.000,00 (lima puluh juta rupiah));</li>
+                        </ul>
+                    </li>
+                    <li>Daftar nama dan nomor hp penerima paket data/pulsa;</li>
+                    <li>Bukti tanda terima paket data/pulsa (screenshoot bukti transfer paket data/pulsa), Jika tidak ada, maka dilengkapi surat pernyataan dari yang bersangkutan diketahui PPK;</li>
+                </ol>
+
+                <div class="tax-card">
+                    <span class="tax-card-title">⚖️ Ketentuan Perpajakan</span>
+                    <p style="margin: 0; font-weight: 700; color: #7B341E;">Dikenakan PPh 22 sebesar 1,5% (untuk transaksi di atas Rp2.000.000,00 (dua juta rupiah).</p>
+                </div>
+            </div>
+        </details>
+
+        <details>
+            <summary>
+                <div>📦 Biaya <span>Pengadaan Perlengkapan SE2026</span></div>
+            </summary>
+            <div class="content-inner">
+                <div class="ruang-lingkup">
+                    <strong>📌 Daftar Alokasi Perlengkapan:</strong>
+                    <ul>
+                        <li>Merchandise SE2026</li>
+                        <li>Produksi dan pemasangan media luar ruang (poster, spanduk, baliho)</li>
+                        <li>Seminar Kit Focus Group Discussion Sosialisasi Sensus Ekonomi 2026 dengan Komisi X DPR RI</li>
+                        <li>Seminar Kit Focus Group Discussion Sosialisasi Sensus Ekonomi 2026 dengan Komite IV DPD RI</li>
+                        <li>Perlengkapan rekonsiliasi prelist SBR untuk SE2026 dengan kabupaten/kota dan OPD terkait</li>
+                        <li>Perlengkapan pelatihan inda daerah</li>
+                        <li>Perlengkapan pelatihan petugas pendataan</li>
+                        <li>Perlengkapan pelatihan petugas pengolahan peta</li>
+                        <li>Perlengkapan Rapat koordinasi teknis BPS Kabupaten Kota ke Provinsi</li>
+                    </ul>
+                </div>
+
+                <div class="sub-judul">📖 Pengertian</div>
+                <p>Satuan biaya kebutuhan dasar perkantoran di dalam negeri merupakan satuan biaya yang digunakan untuk kebutuhan dasar perkantoran berupa barang habis pakai yang secara langsung menunjang penyelenggaraan operasional dan untuk memenuhi kebutuhan dasar suatu kantor dapat memberikan pelayanan secara optimal.</p>
+                <p>Barang pakai habis bersifat tidak berkelanjutan, hanya untuk satu kali kegiatan dalam jangka waktu pendek yang diperlukan dalam pelaksanaan kegiatan non operasional seperti pameran, seminar, sosialisasi, rapat, diseminasi dan lain lain yang terkait langsung dengan output suatu kegiatan dan tidak menghasilkan barang persediaan.</p>
+                <p>Berdasarkan surat edaran Direktorat Akuntansi dan Pelaporan Keuangan, Direktorat Jenderal Perbendaharaan, Kementerian Keuangan Nomor: SE-6478/PB.06/2015, “untuk barang-barang yang direncanakan “habis pada satu kegiatan” tidak dialokasikan dari belanja barang persediaan dan “tidak menjadi barang persediaan”.</p>
+
+                <div class="sub-judul">📝 Catatan Penting</div>
+                <p>Pelaksanaan belanja perlengkapan habis pakai memperhatikan prinsip efisien, ekonomis, efektif, kewajaran dan kepatutan. Batasan Belanja Barang Perlengkapan pakai habis yang dimaksud adalah:</p>
+                <ul>
+                    <li>a. tidak direncanakan sebagai barang persediaan;</li>
+                    <li>b. perencanaan pengadaan hanya untuk dibagikan langsung habis dalam sekali kegiatan saja;</li>
+                    <li>c. tidak direncanakan akan digunakan dalam kurun waktu periode tertentu/rutin;</li>
+                    <li>d. tidak merupakan barang yang bersifat membentuk modal/menambah aset;</li>
+                    <li>e. tidak tersimpan/belum digunakan/tersisa saat periode Laporan Keuangan dibuat; dan</li>
+                    <li>f. tidak memberi masa manfaat dalam periode pencatatan akuntansi dalam laporan keuangan.</li>
+                </ul>
+
+                <div class="sub-judul">📂 Kelengkapan Tagihan Pembayaran</div>
+                <ol>
+                    <li>Kerangka Acuan Kegiatan yang diajukan oleh Penanggungjawab kegiatan dan diketahui oleh PPK;</li>
+                    <li>Form Permintaan (dari Penanggung Jawab Kegiatan kepada PPK) (dari aplikasi BOS);</li>
+                    <li>Komitmen dalam bentuk kontrak dapat berupa:
+                        <ul>
+                            <li>a. Bukti Pembelian/Pembayaran (nilai pengadaan paling banyak Rp10.000.000,00 (sepuluh juta rupiah));</li>
+                            <li>b. Kuitansi (nilai pengadaan paling banyak Rp50.000.000,00 (lima puluh juta rupiah));</li>
+                            <li>c. Surat Perintah Kerja (nilai pengadaan bernilai di atas Rp50.000.000,00 (lima puluh juta rupiah) sampai dengan Rp200.000.000,00 (dua ratus juta rupiah));</li>
+                            <li>d. Surat Perjanjian (nilai pengadaan di atas Rp200.000.000,00 (dua ratus juta rupiah)); dan/atau</li>
+                            <li>e. Surat/Bukti Pesanan (Jika menggunakan E-Purchasing);</li>
+                        </ul>
+                    </li>
+                </ol>
+                <span class="italic-note">sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang/jasa pemerintah;</span>
+
+                <ol start="4">
+                    <li>Daftar Alokasi (tanda terima barang diserahkan);</li>
+                    <li>Bukti Prestasi Pekerjaan dapat berbentuk:
+                        <ul>
+                            <li>a. Berita Acara Penyelesaian Pekerjaan;</li>
+                            <li>b. Berita Acara Serah Terima Pekerjaan/Barang;</li>
+                            <li>c. Berita Acara Pembayaran;</li>
+                            <li>d. Berita Acara Kemajuan Pekerjaan; dan/atau</li>
+                            <li>e. Bukti Penyelesaian Pekerjaan lainnya.</li>
+                        </ul>
+                    </li>
+                </ol>
+                <span class="italic-note">Bukti prestasi pekerjaan tersebut sesuai dengan ketentuan peraturan perundang-undangan mengenai pengadaan barang dan jasa pemerintah;</span>
+
+                <ol start="6">
+                    <li>Faktur Pajak;</li>
+                </ol>
+
+                <div class="tax-card">
+                    <span class="tax-card-title">⚖️ Ketentuan PPN & PPh 22 Perlengkapan</span>
+                    <ul>
+                        <li>7. SSP PPN sesuai aturan yang berlaku (dikenakan atas Pengusaha Kena Pajak (PKP), untuk transaksi diatas Rp2.000.000,00 (dua juta rupiah)); dan</li>
+                        <li>8. Surat Setoran Pajak (SSP) PPh 22 sebesar 1,5% dengan ketentuan sebagai berikut:
+                            <ul>
+                                <li>a. PPh 22 dikenakan untuk pengadaan/pembelian diatas 2 juta;</li>
+                                <li>b. PPh 22 dikecualikan untuk: Pembayaran menggunakan kartu kredit pemerintah (KKP); BBM, Benda Pos, Air, Telepon dan Listrik;</li>
+                                <li>c. NPWP yang digunakan adalah NPWP rekanan. Jika rekanan tidak memiliki NPWP, maka menggunakan NIK pemilik.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </details>
+
+    </div>
+
+    <div class="footer-note">
+        TIM PENYUSUN PAK | BIRO KEUANGAN DAN BMN | 2026
+    </div>
+
+</body>
+</html>

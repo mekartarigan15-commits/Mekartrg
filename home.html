@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PAK Sensus Ekonomi 2026</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f0f4f8; 
+            color: #1e293b;
+            line-height: 1.6;
+        }
+     header {
+            background-color: #0b3c5d;
+            color: #fff;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(11, 60, 93, 0.15);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.85)), 
+                        url('fot.jpeg') no-repeat center center/cover;
+            height: 60vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: #fff;
+            padding: 0 20px;
+            margin-top: 55px;
+        }
+
+        .hero-content h1 {
+            font-size: 2.3rem;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            font-weight: 700;
+        }
+
+        .hero-content h2 {
+            font-size: 1.8rem;
+            color: orange;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            max-width: 1000px;
+            margin: 0 auto 30px auto;
+            opacity: 0.9;
+            color: #d2e5f5;
+        }
+
+        .btn {
+            background-color: #328cc1;
+            color: #fff;
+            padding: 12px 25px;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background 0.3s, transform 0.2s;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            background-color: #0b3c5d;
+            border: 1px solid #328cc1;
+            transform: translateY(-2px);
+        }
+
+
+        .legal-section {
+            max-width: 1000px;
+            margin: 4px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .section-title h3 {
+            font-size: 1.8rem;
+            color: #0b3c5d;
+            margin-bottom: 10px;
+        }
+
+        #searchInput {
+            width: 100%;
+            max-width: 500px;
+            padding: 12px 20px;
+            margin-top: 15px;
+            border: 2px solid #b9cedf;
+            background-color: #fff;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+            transition: all 0.3s;
+            color: #0b3c5d;
+        }
+
+        #searchInput:focus {
+            border-color: #328cc1;
+            box-shadow: 0 0 10px rgba(50, 140, 193, 0.25);
+        }
+
+     
+        .legal-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            counter-reset: hukum-counter; 
+
+        .legal-item {
+            background: #fff;
+            padding: 15px 15px;
+            border-left: 5px solid orange;
+            border-radius: 0 8px 8px 0;
+            box-shadow: 0 2px 5px rgba(11, 60, 93, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .legal-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 8px rgba(11, 60, 93, 0.1);
+        }
+
+      
+        .legal-item::before {
+            counter-increment: hukum-counter; 
+            content: counter(hukum-counter) "."; 
+            font-weight: bold;
+            font-size: 1.1rem;
+            color: #0b3c5d;
+            min-width: 30px;
+        }
+
+        /* Badge Kategori Variasi Biru */
+        .badge {
+            padding: 5px 10px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            color: #fff;
+            border-radius: 4px;
+            text-transform: uppercase;
+            min-width: 90px;
+            text-align: center;
+        }
+        .uu { background-color: #0b3c5d; }       
+        .pp { background-color: #1d5f8a; }   
+        .pmk { background-color: #328cc1; }    
+        .bps { background-color: #4a90e2; }   
+        .perpres { background-color: #2c3e50; } 
+        .dirjen { background-color: #5c97bf; }   
+        .surat { background-color: #0077b6; }   
+        .psak { background-color: #64748b; }   
+
+        .item-text {
+            font-size: 0.95rem;
+            color: #334155;
+            text-align: justify;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #0b3c5d;
+            color: #d2e5f5;
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            border-top: 4px solid #328cc1;
+            margin-top: 40px;
+        }
+
+         .logo-right-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-right-container img {
+            height: 45px;
+            width: auto;
+            object-fit: contain;
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fa-solid fa-chart-line"></i> SE2026
+            </div>
+            <div class="logo-right-container">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/2/22/Logo_BPS.svg" alt="Logo Kanan 1">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/a/a2/Logo_of_Ministry_of_Finance_of_the_Republic_of_Indonesia.svg" alt="Logo Kanan 2">
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>PEDOMAN ADMINISTRASI KEUANGAN</h1>
+            <h2>SENSUS EKONOMI 2026</h2>
+            <p>Pedoman Administrasi Keuangan Kegiatan Sensus Ekonomi 2026 merupakan bagian dari Pedoman Administrasi Keuangan Sensus dan Survei  (Perka BPS No 13 Tahun 2026) di  Lingkungan Badan Pusat Statistik (BPS) yang telah  disusun dengan memperhatikan dasar hukum pelaksanaan kegiatan dan pengelolaan anggaran sebagai berikut:</p>
+            <a href="#dasar-hukum" class="btn">Lihat Dasar Hukum Lengkap <i class="fa-solid fa-arrow-down"></i></a>
+        </div>
+    </section>
+
+    <section id="dasar-hukum" class="legal-section">
+        <div class="section-title">
+            <input type="text" id="searchInput" placeholder="Cari nomor, kata kunci undang-undang atau peraturan...">
+        </div>
+
+        <div class="legal-list" id="legalList">
+            
+            <div class="legal-item">
+                <span class="badge uu">UU</span>
+                <div class="item-text">
+                    <strong>Undang-Undang Nomor 7 Tahun 1983</strong> tentang Pajak Penghasilan (Lembaran Negara Republik Indonesia Tahun 1983 Nomor 50, Tambahan Lembaran Negara Republik Indonesia Nomor 3263) sebagaimana telah beberapa kali diubah terakhir dengan Undang-Undang Nomor 36 Tahun 2008 tentang Perubahan Keempat atas Undang-Undang Nomor 7 Tahun 1983 tentang Pajak Penghasilan (Lembaran Negara Republik Indonesia Tahun 2008 Nomor 133, Tambahan Lembaran Negara Republik Indonesia Nomor 4893);
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge uu">UU</span>
+                <div class="item-text">
+                    <strong>Undang-Undang Nomor 8 Tahun 1983</strong> tentang Pajak Pertambahan Nilai Barang dan Jasa dan Pajak Penjualan atas Barang Mewah (Lembaran Negara Republik Indonesia Tahun 1983 Nomor 51, Tambahan Lembaran Negara Republik Indonesia Nomor 3264) sebagaimana telah beberapa kali diubah terakhir dengan Undang-Undang Nomor 42 Tahun 2009 tentang Perubahan Ketiga atas Undang-Undang Nomor 8 Tahun 1983 tentang Pajak Pertambahan Nilai Barang dan Jasa dan Pajak Penjualan atas Barang Mewah (Lembaran Negara Republik Indonesia Tahun 2009 Nomor 150, Tambahan Lembaran Negara Republik Indonesia Nomor 5069);
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge uu">UU</span>
+                <div class="item-text">
+                    <strong>Undang-Undang Nomor 7 Tahun 2021</strong> tentang Harmonisasi Peraturan Perpajakan (Lembaran Negara Republik Indonesia Tahun 2021 Nomor 246, Tambahan Lembaran Negara Republik Indonesia Nomor 6736);
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge uu">UU</span>
+                <div class="item-text">
+                    <strong>Undang-Undang Nomor 20 Tahun 2023</strong> tentang Aparatur Sipil Negara;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pp">PP</span>
+                <div class="item-text">
+                    <strong>Peraturan Pemerintah Republik Indonesia Nomor 9 Tahun 2022</strong> Tentang Perubahan Kedua Atas Peraturan Pemerintah Nomor 51 Tahun 2008 tentang Pajak Penghasilan Atas Penghasilan Dari Usaha Jasa Konstruksi;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pp">PP</span>
+                <div class="item-text">
+                    <strong>Peraturan Pemerintah Nomor 45 Tahun 2013</strong> tentang Tata Cara Pelaksanaan Anggaran Pendapatan dan Belanja Negara sebagaimana telah diubah dengan Peraturan Pemerintah Nomor 50 Tahun 2018 tentang Tata Cara Pelaksanaan Anggaran Pendapatan dan Belanja Negara;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pp">PP</span>
+                <div class="item-text">
+                    <strong>Peraturan Pemerintah Republik Indonesia Nomor 34 Tahun 2017</strong> Tentang Pajak Penghasilan Atas Penghasilan Dari Persewaan Tanah dan/atau Bangunan;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pp">PP</span>
+                <div class="item-text">
+                    <strong>Peraturan Pemerintah Republik Indonesia Nomor 55 Tahun 2022</strong> Tentang Penyesuaian Pengaturan di Bidang Pajak Penghasilan;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge perpres">Perpres</span>
+                <div class="item-text">
+                    <strong>Peraturan Presiden Nomor 16 Tahun 2018</strong> tentang Pengadaaan Barang/Jasa Pemerintah sebagaimana telah diubah beberapa kali terakhir dengan Peraturan Presiden Republik Indonesia Nomor 46 Tahun 2025 tentang perubahan kedua atas Peraturan Presiden Nomor 16 Tahun 2018 tentang Pengadaaan Barang/Jasa Pemerintah;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge perpres">Perpres</span>
+                <div class="item-text">
+                    <strong>Peraturan Presiden Nomor 86 Tahun 2007</strong> tentang Badan Pusat Statistik sebagaimana telah diubah dengan Peraturan Presiden Nomor 1 Tahun 2025 tentang Badan Pusat Statistik;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan nomor 58/PMK.03/2022</strong> tentang Penunjukan Pihak Lain sebagai Pemungut Pajak dan Tata Cara Pemungutan, Penyetoran, dan/atau Pelaporan Pajak yang Dipungut oleh Pihak Lain atas Transaksi Pengadaan Barang dan/atau Jasa melalui Sistem Informasi Pengadaan Pemerintah;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 214/PMK.05/2013</strong> tentang Bagan Akun Standar (Berita Negara Republik Indonesia Tahun 2013 Nomor 1618);
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 145/PMK.05/2017</strong> tentang Tata Cara Pembayaran Atas Beban Anggaran Pendapatan dan Belanja Negara Sebelum Barang/Jasa Diterima;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 231/PMK.03/2019</strong> tentang Tata Cara Pendaftaran dan Penghapusan Nomor Pokok Wajib Pajak, Pengukuhan dan Pencabutan Pengukuhan Pengusaha Kena Pajak, Serta Pemotongan dan/atau Pemungutan, Penyetoran, dan Pelaporan Pajak Bagi Instansi Pemerintah sebagaimana telah diubah dengan Peraturan Menteri Keuangan Nomor 59/PMK.03/2022 tentang Perubahan atas Peraturan Menteri Keuangan Nomor 231/PMK.03/2019 tentang Tata Cara Pendaftaran dan Penghapusan Nomor Pokok Wajib Pajak, Pengukuhan dan Pencabutan Pengukuhan Pengusaha Kena Pajak, Serta Pemotongan dan/atau Pemungutan, Penyetoran, dan Pelaporan Pajak Bagi Instansi Pemerintah;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 100 Tahun 2025</strong> tentang Kebijakan Akuntansi Pemerintah Pusat (Berita Negara Republik Indonesia Tahun 2025 Nomor 1220);
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 232/PMK.05/2022</strong> tentang Sistem Akuntansi dan Pelaporan Keuangan Instansi;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 107 Tahun 2024</strong> tentang Perubahan Atas Peraturan Menteri Keuangan Nomor 62 Tahun 2023 Tentang Perencanaan Anggaran, Pelaksanaan Anggaran, Serta Akuntansi Dan Pelaporan Keuangan;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 168 Tahun 2023</strong> Tentang Petunjuk Pelaksanaan Pemotongan Pajak Atas Penghasilan Sehubungan Dengan Pekerjaan, Jasa, Atau Kegiatan Orang Pribadi;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan</strong> tentang Standar Biaya Masukan yang berlaku;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 113/PMK.05/2012</strong> tentang Perjalanan Dinas Dalam Negeri Bagi Pejabat Negara, Pegawai Negeri, Dan Pegawai Tidak Tetap sebagaimana telah diubah dengan Peraturan Menteri Keuangan Nomor 119 Tahun 2023 Tentang Perubahan Atas Peraturan Menteri Keuangan Nomor 113/PMK.05/2012 tentang Perjalanan Dinas Dalam Negeri Bagi Pejabat Negara, Pegawai Negeri dan Pegawai Tidak Tetap;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 162/PMK.05/2013</strong> tentang Kedudukan dan Tanggung Jawab Bendahara Pada Satuan Kerja Pengelola Anggaran Pendapatan dan Belanja Negara;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 101/PMK.10/2016</strong> tentang Penyesuaian Penghasilan Tidak Kena Pajak;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 225/PMK.05/2016</strong> tentang Penerapan Standar Akuntansi Pemerintahan Akrual pada Pemerintah Pusat;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Republik Indonesia Nomor 212/PMK.05/2019</strong> Tentang Jurnal Akuntansi Pemerintahan Pada Pemerintah Pusat;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Nomor 136 Tahun 2023</strong> tentang Perubahan Atas Peraturan Menteri Keuangan Nomor 12/PMK.03/2022 tentang Nomor Pokok Wajib Pajak Bagi Wajib Pajak Orang Pribadi, Wajib Pajak Badan dan Wajib Pajak Instansi Pemerintah;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Republik Indonesia Nomor 6 /PMK.03/2021</strong> tentang Penghitungan dan Pemungutan Pajak Pertambahan Nilai Serta Pajak Penghasilan Atas Penyerahan/Penghasilan Sehubungan Dengan Penjualan Pulsa, Kartu Perdana, Token, dan Voucer;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Republik Indonesia Nomor 141/PMK.03/2015</strong> Tentang Jenis Jasa Lainnya Sebagaimana Dimaksud Dalam Pasal 23 Ayat (1) Huruf C Angka 2 Undang-Undang Nomor 7 Tahun 1983 Tentang Pajak Penghasilan Sebagaimana Telah Beberapa Kali Diubah Terakhir Dengan Undang-Undang Nomor 36 Tahun 2008;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge pmk">PMK</span>
+                <div class="item-text">
+                    <strong>Peraturan Menteri Keuangan Republik Indonesia Nomor 121/PMK.03/2015</strong> Tentang Perubahan Ketiga Atas Peraturan Menteri Keuangan Nomor 75/PMK.03/2010 Tentang Nilai Lain Sebagai Dasar Pengenaan Pajak;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge dirjen">Perdirjen</span>
+                <div class="item-text">
+                    <strong>Peraturan Direktur Jenderal Perbendaharaan Nomor 22/PER/2013</strong> tentang Ketentuan Lebih Lanjut Pelaksanaan Perjalanan Dinas Dalam Negeri Bagi Pejabat Negara, Pegawai Negeri, dan Pegawai Tidak Tetap;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Badan Pusat Statistik Nomor 1 Tahun 2023</strong> tentang Tata Naskah Dinas;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Kepala Badan Pusat Statistik</strong> tentang Pedoman Standar Biaya Kegiatan Statistik yang berlaku;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Kepala Badan Pusat Statistik</strong> tentang Kebijakan Akuntansi di Lingkungan Badan Pusat Statistik yang masih berlaku;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Kepala BPS</strong> tentang Pedoman Pelaksanaan Perjalanan Dinas Jabatan di Lingkungan Badan Pusat Statistik yang masih berlaku;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Kepala BPS</strong> tentang Pedoman Transaksi Pembayaran Nontunai di Lingkungan Badan Pusat Statistik yang masih berlaku;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Kepala BPS</strong> mengenai Petunjuk Pelaksanaan Kegiatan dan Pengelolaan Keuangan di Pusat;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge bps">Perka BPS</span>
+                <div class="item-text">
+                    <strong>Peraturan Kepala BPS</strong> mengenai Petunjuk Pelaksanaan Kegiatan dan Pengelolaan Keuangan di Daerah;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge dirjen">Perdirjen</span>
+                <div class="item-text">
+                    <strong>Peraturan Direktur Jenderal Pajak Nomor PER-16/PJ/2016</strong> tentang Pedoman Teknis Tata Cara Pemotongan, Penyetoran dan Pelaporan Pajak Penghasilan Pasal 21 dan/atau Pajak Penghasilan Pasal 26 Sehubungan Dengan Pekerjaan, Jasa, dan Kegiatan Orang Pribadi;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge dirjen">Kepdirjen</span>
+                <div class="item-text">
+                    <strong>Keputusan Direktur Jenderal Perbendaharaan Nomor KEP-291/PB/2022</strong> tentang Pemutakhiran Kodefikasi Segmen Akun Pada Bagan Akun Standar;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge surat">Surat / SE</span>
+                <div class="item-text">
+                    <strong>Surat edaran Direktorat Akuntansi dan Pelaporan Keuangan</strong>, Direktorat Jenderal Perbendaharaan, Kementerian Keuangan Nomor: SE-6478/PB.06/2015 Tentang Penggunaan Akun Belanja yang Menghasilkan Persediaan;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge surat">Surat / SE</span>
+                <div class="item-text">
+                    <strong>Surat Menteri Keuangan nomor S-309/MK.02/2023</strong> tentang Tanggapan atas Usulan SBML di Lingkup Badan Pusat Statistik;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge surat">Surat / SE</span>
+                <div class="item-text">
+                    <strong>Surat Direktur Sistem Penganggaran Nomor S-17/AG.9/2025</strong> tanggal 5 agustus 2025 tentang Konfirmasi SBM 2026;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge surat">Surat / SE</span>
+                <div class="item-text">
+                    <strong>Surat Plt. Sekretaris Utama nomor B-446/02100/PR.130/2025</strong> tanggal 26 Agustus 2025 tentang Standar Biaya Paket Data dan Asuransi;
+                </div>
+            </div>
+
+            <div class="legal-item">
+                <span class="badge psak">PSAK</span>
+                <div class="item-text">
+                    <strong>Pernyataan Standar Akuntansi Keuangan (PSAK) 73</strong> tentang sewa.
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer id="tim">
+        <div class="footer-content">
+            <p>TIM PENYUSUN PAK | BIRO KEUANGAN DAN BMN | &copy; 2026</p>
+        </div>
+    </footer>
+
+</body>
+</html>
